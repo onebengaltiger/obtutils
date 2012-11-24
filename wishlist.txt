@@ -1,0 +1,3 @@
+﻿
+Agregar clase para manejar informacion general de una aplicacion.
+
