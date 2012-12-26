@@ -1,8 +1,6 @@
 ﻿/***************************************************************************
- *   Copyright (C) 2011 by Rodolfo Conde Martinez                          *
+ *   Copyright (C) 2011-2013 by Rodolfo Conde Martinez                     *
  *   rcm@gmx.co.uk                                                         *
- *                                                                         *
- *   This is property of SECTI, Corp.                                      *
  ***************************************************************************/
 
 

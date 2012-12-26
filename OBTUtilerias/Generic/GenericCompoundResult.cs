@@ -6,7 +6,7 @@
 
 using System;
 
-namespace OBTUtils
+namespace OBTUtils.Generic
 {
 	/// <summary>
 	/// Generic class to be used as the return value
@@ -14,11 +14,14 @@ namespace OBTUtils
 	/// programmer wants to give to the function caller as much
 	///  information as possible about what happen with the
 	///  invoked operation. The class can be extended to include
-	///  extra functionality
+	///  extra functionality. This generic version allows the programmer
+	/// to choose any type for the Errno member (the TStatus generic type)
+	/// and can contain extra information in the Information member, which
+	/// is of type TInfo
 	/// </summary>
 	/// 
 	/// <remarks>\author Rodolfo Conde</remarks>
-	public class GenericCompoundResult
+	public class GenericCompoundResult<TStatus, TInfo>
 	{
 		/// <summary>
 		/// Indicates wether the executed operation
@@ -30,7 +33,13 @@ namespace OBTUtils
 		/// This can contain some bit of information about
 		/// the executed operation
 		/// </summary>
-		private string __additionalDetails;
+		private object __additionalDetails;
+		
+		/// <summary>
+		/// This field can contain some extra result
+		/// of the executed operation
+		/// </summary>
+		private TInfo __moreInformation;
 		
 		/// <summary>
 		/// Indicates exactly what kind of error happened
@@ -42,17 +51,28 @@ namespace OBTUtils
 		/// Indicates an error code, dependent on the application
 		/// using this class
 		/// </summary>
-		private int __errno;
+		private TStatus __errno;
 		
 		
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public GenericCompoundResult(bool wassucceful, string details, Exception error,
-		                             int errorcode)
+		/// <param name="wassucceful">Indicates wether the executed operation
+		/// was successful</param>
+		/// <param name="details">Contain some bit of information about
+		/// the executed operation</param>
+		/// <param name="information">Contain some extra result
+		/// of the executed operation</param>
+		/// <param name="error">Indicates exactly what kind of error happened
+		/// while the operation was being performed</param>
+		/// <param name="errorcode">Indicates an error code, dependent on the application
+		/// using this class</param>
+		public GenericCompoundResult(bool wassucceful, string details, TInfo information,
+		                             Exception error, TStatus errorcode)
 		{
 			__wasSuccessful = wassucceful;
 			__additionalDetails = details;
+			__moreInformation = information;
 			__errorInformation = error;
 			__errno = errorcode;
 		}
@@ -60,36 +80,47 @@ namespace OBTUtils
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public GenericCompoundResult(bool wassucceful, string details, Exception error)
-			: this(wassucceful, details, error, 0)
+		/// <param name="wassucceful">Indicates wether the executed operation
+		/// was successful</param>
+		/// <param name="details">Contain some bit of information about
+		/// the executed operation</param>
+		/// <param name="information">Contain some extra result
+		/// of the executed operation</param>
+		/// <param name="error">Indicates exactly what kind of error happened
+		/// while the operation was being performed</param>
+		public GenericCompoundResult(bool wassucceful, string details,
+		                             TInfo information, Exception error)
+			: this(wassucceful, details, information, error, default(TStatus))
 		{ }
 		
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public GenericCompoundResult(bool wassucceful, string details) :
-			this(wassucceful, details, null)
+		/// <param name="wassucceful">Indicates wether the executed operation
+		/// was successful</param>
+		/// <param name="details">Contain some bit of information about
+		/// the executed operation</param>
+		/// <param name="information">Contain some extra result
+		/// of the executed operation</param>
+		public GenericCompoundResult(bool wassucceful, string details,
+		                             TInfo information) :
+			this(wassucceful, details, information, null)
 		{ }
 		
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public GenericCompoundResult(bool wassucceful, Exception error) :
-			this(wassucceful, String.Empty, error)
-		{ }
-		
-		/// <summary>
-		/// Constructor
-		/// </summary>
+		/// <param name="wassucceful">Indicates wether the executed operation
+		/// was successful</param>
 		public GenericCompoundResult(bool wassucceful) :
-			this(wassucceful, String.Empty, null)
+			this(wassucceful, String.Empty, default(TInfo))
 		{ }
 		
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		public GenericCompoundResult() :
-			this(false, String.Empty, null)
+			this(false, String.Empty, default(TInfo))
 		{ }
 		
 		
@@ -100,6 +131,9 @@ namespace OBTUtils
 		{
 			__additionalDetails = null;
 			__errorInformation = null;
+			
+			__errno = default(TStatus);
+			__moreInformation = default(TInfo);
 		}
 		
 		
@@ -110,12 +144,15 @@ namespace OBTUtils
 		public override string ToString()
 		{
 			return string.Format("[Operation succeded={0}, AdditionalDetails={1}, " +
-			                     "Error code: {3}, " +
-			                     "ErrorInformation={2}]", __wasSuccessful,
+			                     "Result: {2}, Error code: {3}, " +
+			                     "ErrorInformation={4}]",
+			                     __wasSuccessful,
 			                     __additionalDetails,
+			                     __moreInformation,
+			                     __errno,
 			                     (__errorInformation == null ? "None" :
-			                      __errorInformation.ToString()),
-			                     __errno);
+			                      __errorInformation.ToString())
+			                    );
 		}
 
 		
@@ -139,7 +176,7 @@ namespace OBTUtils
 		/// some bit of information about
 		/// the executed operation
 		/// </summary>
-		public string AdditionalDetails {
+		public object AdditionalDetails {
 			get {
 				return __additionalDetails;
 			}
@@ -162,13 +199,27 @@ namespace OBTUtils
 			set {
 				__errorInformation = value;
 			}
+		}		
+		
+		/// <summary>
+		/// Gets or sets a value that contains some extra result
+		/// of the executed operation
+		/// </summary>
+		public TInfo MoreInformation {
+			get {
+				return __moreInformation;
+			}
+			
+			set {
+				__moreInformation = value;
+			}
 		}
 		
 		/// <summary>
 		/// Gets or sets an error code, dependent on the application
 		/// using this class
 		/// </summary>
-		public int Errno {
+		public TStatus Errno {
 			get {
 				return __errno;
 			}

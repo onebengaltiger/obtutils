@@ -12,10 +12,10 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("OBTDBSQLUtils: Many utilities for Database/SQL programming")]
 [assembly: AssemblyDescription("Many utilities for Database/SQL programming")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("ØβŢ")]
+[assembly: AssemblyCompany(OBTUtils.OBTApplicationInformation.appCompany)]
 [assembly: AssemblyProduct("OBTDBSQLUtils")]
-[assembly: AssemblyCopyright("Copyright 2010-2012 (C) by Rodolfo Conde Martínez")]
-[assembly: AssemblyTrademark("ØβŢ")]
+[assembly: AssemblyCopyright(OBTUtils.OBTApplicationInformation.appAuthorCopyright)]
+[assembly: AssemblyTrademark(OBTUtils.OBTApplicationInformation.appCompany)]
 [assembly: AssemblyCulture("")]
 
 // This sets the default COM visibility of types in the assembly to invisible.
@@ -30,4 +30,4 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can use the default the Revision and 
 // Build Numbers by using the '*' as shown below:
-[assembly: AssemblyVersion("1.3.0")]
+[assembly: AssemblyVersion(OBTUtils.OBTApplicationInformation.appVersion)]

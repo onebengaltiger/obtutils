@@ -10,12 +10,12 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("OBTUtils: Some common stuff useful for programs")]
-[assembly: AssemblyDescription("Some common stuff useful for programs")]
+[assembly: AssemblyDescription(OBTUtils.OBTApplicationInformation.appDescription)]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("ØβŢ")]
-[assembly: AssemblyProduct("OBTUtils")]
-[assembly: AssemblyCopyright("Copyright 2010-2012 (C) by Rodolfo Conde Martínez")]
-[assembly: AssemblyTrademark("ØβŢ")]
+[assembly: AssemblyCompany(OBTUtils.OBTApplicationInformation.appCompany)]
+[assembly: AssemblyProduct(OBTUtils.OBTApplicationInformation.appName)]
+[assembly: AssemblyCopyright(OBTUtils.OBTApplicationInformation.appAuthorCopyright)]
+[assembly: AssemblyTrademark(OBTUtils.OBTApplicationInformation.appCompany)]
 [assembly: AssemblyCulture("")]
 
 // This sets the default COM visibility of types in the assembly to invisible.
@@ -30,4 +30,4 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can use the default the Revision and 
 // Build Numbers by using the '*' as shown below:
-[assembly: AssemblyVersion("3.1.0")]
+[assembly: AssemblyVersion(OBTUtils.OBTApplicationInformation.appVersion)]

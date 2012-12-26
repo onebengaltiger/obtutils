@@ -1,12 +1,10 @@
 ﻿/***************************************************************************
- *   Copyright (C) 2010 by Rodolfo Conde Martinez                          *
+ *   Copyright (C) 2011-2013 by Rodolfo Conde Martinez                     *
  *   rcm@gmx.co.uk                                                         *
  ***************************************************************************/
 
 
 using System;
-using System.Diagnostics;
-
 
 
 namespace OBTUtils.Messaging
@@ -35,16 +33,26 @@ namespace OBTUtils.Messaging
 		/// <see cref="sendMessage" />
 		private int theMainMessenger;
 		
+		/// <summary>
+		/// True to send debugging message to the output
+		/// devices; false otherwise
+		/// </summary>
+		/// <see cref="sendDebugMessage" />
+		/// <see cref="broadcastDebugMessage" />
+		private bool sendDebugging;
+		
 		
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="mainDebugger">Indicates which is the main messenger.
-		/// This is
-		/// used by the method sendMessage</param>
-		/// <param name="someDebuggers">Array containing all the messengers</param>
+		/// <param name="mainmessenger">Indicates which is the main messenger.
+		/// This is used by the method sendMessage</param>
+		/// <param name="senddebugoutput">True to send debugging message to the output
+		/// devices; false otherwise</param>
+		/// <param name="somemessengers">Array containing all the messengers</param>
 		/// <see cref="sendMessage" />
-		public MessengersBoss(int mainmessenger, params IMessenger []somemessengers)
+		public MessengersBoss(int mainmessenger, bool senddebugoutput,
+		                      params IMessenger []somemessengers)
 		{
 			if (somemessengers == null)
 				throw new OBTException("No messengers were given in " +
@@ -60,25 +68,38 @@ namespace OBTUtils.Messaging
 			Array.Copy(somemessengers, messengers, somemessengers.Length);
 			
 			theMainMessenger = mainmessenger;
+			sendDebugging = senddebugoutput;
 		}
 		
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="someDebuggers">Array containing all the debuggers</param>
+		/// <param name="senddebugoutput">True to send debugging message to the output
+		/// devices; false otherwise</param>
+		/// <param name="someMessengers">Array containing all the debuggers</param>
 		/// <remarks>This constructor sets the first debugger in the array as the main
 		/// debugger</remarks>
 		/// <see cref="sendMessage" />
-		public MessengersBoss(params IMessenger []someMessengers) :
-			this(0, someMessengers) { }
+		public MessengersBoss(bool senddebugoutput, params IMessenger []someMessengers) :
+			this(0, senddebugoutput, someMessengers) { }
 		
 		/// <summary>
 		/// Constructor. The instance returned by this method has an unique
-		/// debugger (an instance of DBGConsoleMessenger) and this is the main debugger
+		/// debugger (an instance of ConsoleMessenger) and this is the main debugger
 		/// </summary>
+		/// <param name="senddebugoutput">True to send debugging message to the output
+		/// devices; false otherwise</param>
 		/// <see cref="sendMessage" />
-		/// <see cref="DBGConsoleMessenger" />
-		public MessengersBoss() : this(0, new ConsoleMessenger()) { }
+		/// <see cref="ConsoleMessenger" />
+		public MessengersBoss(bool senddebugoutput)
+			: this(0, senddebugoutput, new ConsoleMessenger())
+		{ }
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		public MessengersBoss()
+			: this(true) { }
 		
 		
 		/// <summary>
@@ -121,10 +142,18 @@ namespace OBTUtils.Messaging
 		/// Gets the array of messengers
 		/// </summary>
 		public IMessenger[] Messengers {
-			get { 
-				return messengers; 
+			get {
+				return messengers;
 			}
 		}
+		
+		/// <summary>
+		/// Indicates whether debugging output is turn on
+		/// </summary>
+		public bool SendDebugging {
+			get { return sendDebugging; }
+		}
+		
 		
 		/// <summary>
 		/// Sends a debug message using the main messenger
@@ -132,10 +161,10 @@ namespace OBTUtils.Messaging
 		/// <param name="format">Formatting string</param>
 		/// <param name="args">arguments to be replaced inside
 		/// the format string</param>
-		[Conditional("DEBUG")]
 		public void sendDebugMessage(string format, params object []args)
 		{
-			sendMessage(format, args);
+			if (sendDebugging)
+				sendMessage(format, args);
 		}
 		
 		/// <summary>
@@ -144,10 +173,10 @@ namespace OBTUtils.Messaging
 		/// <param name="format">Formatting string</param>
 		/// <param name="args">arguments to be replaced inside
 		/// the format string</param>
-		[Conditional("DEBUG")]
 		public void broadcastDebugMessage(string format, params object []args)
 		{
-			broadcastMessage(format, args);
+			if (sendDebugging)
+				broadcastMessage(format, args);
 		}
 	}
 }

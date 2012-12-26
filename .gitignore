@@ -1,0 +1,6 @@
+bin/
+obj/
+docs/
+doxy_warnings.txt
+*.pdb
+

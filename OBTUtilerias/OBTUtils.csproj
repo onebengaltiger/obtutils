@@ -78,6 +78,8 @@
   <ItemGroup>
     <Compile Include="BuscadorTG.cs" />
     <Compile Include="GenericCompoundResult.cs" />
+    <Compile Include="Generic\GenericCompoundResult.cs" />
+    <Compile Include="OBTApplicationInformation.cs" />
     <Compile Include="Messaging\ConsoleMessenger.cs" />
     <Compile Include="Messaging\ComponentMessengers.cs" />
     <Compile Include="Messaging\IMessenger.cs" />
@@ -97,6 +99,7 @@
     <Folder Include="Messaging" />
     <Folder Include="Net" />
     <Folder Include="Net\Mail" />
+    <Folder Include="Generic" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>
