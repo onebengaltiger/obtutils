@@ -28,7 +28,7 @@ namespace OBTUtils
 	/// </summary>
 	/// 
 	/// <remarks>\author Rodolfo Conde</remarks>
-	public class BuscadorTG<T>
+	public class IncrementalSeeker<T>
 	{
 		/// <summary>
 		/// Criterio anterior de busqueda
@@ -36,7 +36,7 @@ namespace OBTUtils
 		private string criterioAnterior;
 		
 		/// <summary>
-		/// Delegado que implementa el método real 
+		/// Delegado que implementa el método real
 		/// de busqueda
 		/// </summary>
 		buscadorReal<T> elBuscador;
@@ -50,10 +50,10 @@ namespace OBTUtils
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="buscador">Delegado que implementa el método real 
+		/// <param name="buscador">Delegado que implementa el método real
 		/// de busqueda</param>
 		/// <param name="criterioInicial">Criterio inicial de busqueda</param>
-		public BuscadorTG(buscadorReal<T> buscador, string criterioInicial)
+		public IncrementalSeeker(buscadorReal<T> buscador, string criterioInicial)
 		{
 			elBuscador = buscador;
 			criterioAnterior = criterioInicial;
@@ -63,28 +63,28 @@ namespace OBTUtils
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="buscador">Delegado que implementa el método real 
+		/// <param name="buscador">Delegado que implementa el método real
 		/// de busqueda</param>
-		public BuscadorTG(buscadorReal<T> buscador)
+		public IncrementalSeeker(buscadorReal<T> buscador)
 			: this(buscador, String.Empty) { }
 		
 		
 		/// <summary>
 		/// Destructor
 		/// </summary>
-		~BuscadorTG() {
+		~IncrementalSeeker() {
 			elBuscador = null;
 			criterioAnterior = null;
 			
 			if (resultadoAnterior != null) {
 				resultadoAnterior.Clear();
 				resultadoAnterior = null;
-			}			
+			}
 		}
 		
 		
 		/// <summary>
-		/// Obtiene o asigna el criterio para realizar 
+		/// Obtiene o asigna el criterio para realizar
 		/// la busqueda
 		/// </summary>
 		public string CriterioAnterior {
@@ -98,7 +98,7 @@ namespace OBTUtils
 		}
 		
 		/// <summary>
-		/// Obtiene o asigna al delegado que implementa el método real 
+		/// Obtiene o asigna al delegado que implementa el método real
 		/// de busqueda
 		/// </summary>
 		public buscadorReal<T> ElBuscador {
@@ -107,7 +107,7 @@ namespace OBTUtils
 			}
 		}
 		
-
+		
 		/// <summary>
 		/// Realiza una busqueda usando al delegado de busqueda con
 		/// el criterio dado
@@ -116,7 +116,7 @@ namespace OBTUtils
 		/// <param name="realizaBusquedalocal">indica si se hace una busqueda "loca",
 		/// es decir, si se utilizan los resultados previamente obtenidos de una
 		/// busqueda anterior</param>
-		/// <returns>Una colección de valores, que son el resultado 
+		/// <returns>Una colección de valores, que son el resultado
 		/// de la busqueda hecha</returns>
 		public ICollection<T> busca(string criterio, bool realizaBusquedalocal) {
 			ICollection<T> retVal = null;
@@ -157,11 +157,11 @@ namespace OBTUtils
 		}
 		
 		/// <summary>
-		/// Realiza la busqueda usando el delegado buscador y el criterio 
+		/// Realiza la busqueda usando el delegado buscador y el criterio
 		/// dado por el parámetro
 		/// </summary>
 		/// <param name="criterio">Criterio de busqueda</param>
-		/// <returns>Una colección de tipo T que representa el resultado 
+		/// <returns>Una colección de tipo T que representa el resultado
 		/// de la busqueda</returns>
 		private ICollection<T> usaBuscador(string criterio) {
 			ICollection<T> retVal;
@@ -176,7 +176,7 @@ namespace OBTUtils
 		
 		
 		/// <summary>
-		/// Delegado interno para realizar una prueba para 
+		/// Delegado interno para realizar una prueba para
 		/// verificar si item1 contiene a item2, en tal caso, el delegado
 		/// debe dar como resultado true y false en caso contrario
 		/// </summary>
@@ -188,7 +188,7 @@ namespace OBTUtils
 		/// anterior, usando el criterio dado por el parámetro criterio
 		/// </summary>
 		/// <param name="criterio">Criterio de busqueda</param>
-		/// <param name="prueba">Delegado para verificar si un elemento de la lista 
+		/// <param name="prueba">Delegado para verificar si un elemento de la lista
 		/// del resultado anterior de busqueda contiene al criterio de busqueda</param>
 		/// <returns>El resultado de la busqueda</returns>
 		private ICollection<T> hazBusquedalocal(string criterio, contiene prueba)

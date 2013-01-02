@@ -118,10 +118,70 @@ namespace OBTUtils.Messaging
 		/// <param name="args">arguments to be replaced inside
 		/// the format string</param>
 		/// <see cref="IMessenger.sendMessage" />
+		[Obsolete]
 		public void sendMessage(string format, params object []args)
 		{
 			if (messengers.Length > 0)
 				messengers[theMainMessenger].sendMessage(format, args);
+		}
+		
+		/// <summary>
+		/// Sends a message using the main messenger
+		/// </summary>
+		/// <param name="title">Title for the message</param>
+		/// <param name="format">Formatting string</param>
+		/// <param name="args">arguments to be replaced inside
+		/// the format string</param>
+		/// <see cref="IMessenger.sendMessage" />
+		public void sendMessage(string title, string format, params object []args)
+		{
+			if (messengers.Length > 0)
+				messengers[theMainMessenger].sendMessage(title, format, args);
+		}
+		
+		/// <summary>
+		/// Sends an information message using the main messenger
+		/// </summary>
+		/// <param name="title">Title for the message</param>
+		/// <param name="format">Formatting string</param>
+		/// <param name="args">arguments to be replaced inside
+		/// the format string</param>
+		/// <see cref="IMessenger.sendInformationMessage" />
+		public void sendInformationMessage(string title, string format,
+		                                   params object []args)
+		{
+			if (messengers.Length > 0)
+				messengers[theMainMessenger].sendInformationMessage(
+					title, format, args
+				);
+		}
+		
+		/// <summary>
+		/// Sends a warning message using the main messenger
+		/// </summary>
+		/// <param name="title">Title for the message</param>
+		/// <param name="format">Formatting string</param>
+		/// <param name="args">arguments to be replaced inside
+		/// the format string</param>
+		/// <see cref="IMessenger.sendWarningMessage" />
+		public void sendWarningMessage(string title, string format, params object []args)
+		{
+			if (messengers.Length > 0)
+				messengers[theMainMessenger].sendWarningMessage(title, format, args);
+		}
+		
+		/// <summary>
+		/// Sends an error message using the main messenger
+		/// </summary>
+		/// <param name="title">Title for the message</param>
+		/// <param name="format">Formatting string</param>
+		/// <param name="args">arguments to be replaced inside
+		/// the format string</param>
+		/// <see cref="IMessenger.sendErrorMessage" />
+		public void sendErrorMessage(string title, string format, params object []args)
+		{
+			if (messengers.Length > 0)
+				messengers[theMainMessenger].sendErrorMessage(title, format, args);
 		}
 		
 		/// <summary>
@@ -131,10 +191,71 @@ namespace OBTUtils.Messaging
 		/// <param name="args">arguments to be replaced inside
 		/// the format string</param>
 		/// <see cref="IMessenger.sendMessage" />
+		[Obsolete]
 		public void broadcastMessage(string format, params object []args)
 		{
 			foreach (IMessenger aMessenger in messengers)
 				aMessenger.sendMessage(format, args);
+		}
+		
+		/// <summary>
+		/// Broadcast a message using all the messengers
+		/// </summary>
+		/// <param name="title">Title for the message</param>
+		/// <param name="format">Formatting string</param>
+		/// <param name="args">arguments to be replaced inside
+		/// the format string</param>
+		/// <see cref="IMessenger.sendMessage" />
+		public void broadcastMessage(string title, string format,
+		                             params object []args)
+		{
+			foreach (IMessenger aMessenger in messengers)
+				aMessenger.sendMessage(title, format, args);
+		}
+		
+		/// <summary>
+		/// Broadcast an information message using all the messengers
+		/// </summary>
+		/// <param name="title">Title for the message</param>
+		/// <param name="format">Formatting string</param>
+		/// <param name="args">arguments to be replaced inside
+		/// the format string</param>
+		/// <see cref="IMessenger.sendInformationMessage" />
+		public void broadcastInformationMessage(string title, string format,
+		                                        params object []args)
+		{
+			foreach (IMessenger aMessenger in messengers)
+				aMessenger.sendInformationMessage(title, format, args);
+		}
+		
+		/// <summary>
+		/// Broadcast a warning message using all the messengers
+		/// </summary>
+		/// <param name="title">Title for the message</param>
+		/// <param name="format">Formatting string</param>
+		/// <param name="args">arguments to be replaced inside
+		/// the format string</param>
+		/// <see cref="IMessenger.sendWarningMessage" />
+		public void broadcastWarningMessage(string title, string format,
+		                                    params object []args)
+		{
+			foreach (IMessenger aMessenger in messengers)
+				aMessenger.sendWarningMessage(title, format, args);
+		}
+		
+		/// <summary>
+		/// Broadcast an error message using all the messengers
+		/// </summary>
+		/// <param name="title">Title for the message</param>
+		/// <param name="format">Formatting string</param>
+		/// <param name="args">arguments to be replaced inside
+		/// the format string</param>
+		/// <see cref="IMessenger.sendErrorMessage" />
+		public void broadcastErrorMessage(string title, string format,
+		                                  params object []args)
+		{
+			foreach (IMessenger aMessenger in messengers)
+				aMessenger.sendErrorMessage(title, format, args);
 		}
 		
 		
@@ -161,10 +282,24 @@ namespace OBTUtils.Messaging
 		/// <param name="format">Formatting string</param>
 		/// <param name="args">arguments to be replaced inside
 		/// the format string</param>
+		[Obsolete]
 		public void sendDebugMessage(string format, params object []args)
 		{
 			if (sendDebugging)
 				sendMessage(format, args);
+		}
+		
+		/// <summary>
+		/// Sends a debug message using the main messenger
+		/// </summary>
+		/// <param name="title">Title for the message</param>
+		/// <param name="format">Formatting string</param>
+		/// <param name="args">arguments to be replaced inside
+		/// the format string</param>
+		public void sendDebugMessage(string title, string format, params object []args)
+		{
+			if (sendDebugging)
+				sendMessage(title, format, args);
 		}
 		
 		/// <summary>
@@ -173,7 +308,22 @@ namespace OBTUtils.Messaging
 		/// <param name="format">Formatting string</param>
 		/// <param name="args">arguments to be replaced inside
 		/// the format string</param>
+		[Obsolete]
 		public void broadcastDebugMessage(string format, params object []args)
+		{
+			if (sendDebugging)
+				broadcastMessage(format, args);
+		}
+		
+		/// <summary>
+		/// Broadcast a debug message using all the messengers
+		/// </summary>
+		/// <param name="title">Title for the message</param>
+		/// <param name="format">Formatting string</param>
+		/// <param name="args">arguments to be replaced inside
+		/// the format string</param>
+		public void broadcastDebugMessage(string title, string format,
+		                                  params object []args)
 		{
 			if (sendDebugging)
 				broadcastMessage(format, args);
