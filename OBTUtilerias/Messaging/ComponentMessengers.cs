@@ -64,9 +64,19 @@ namespace OBTUtils.Messaging
 		/// <summary>
 		/// Gets the messengers manager
 		/// </summary>
+		[Obsolete("This property is deprecated, use TheMessengersBoss instead")]
 		public MessengersBoss Boss {
 			get {
 				return realMessenger.Boss;
+			}
+		}
+		
+		/// <summary>
+		/// Gets the messengers manager
+		/// </summary>
+		public MessengersBoss TheMessengersBoss {
+			get {
+				return realMessenger.TheMessengersBoss;
 			}
 		}
 	}

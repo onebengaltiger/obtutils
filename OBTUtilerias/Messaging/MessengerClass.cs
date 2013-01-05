@@ -22,7 +22,7 @@ namespace OBTUtils.Messaging
 	public class MessengerClass
 	{
 		/// <summary>
-		/// The debuggers manager
+		/// The messengers' manager
 		/// </summary>
 		private MessengersBoss boss;
 		
@@ -30,15 +30,27 @@ namespace OBTUtils.Messaging
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="dbgMessengers">optional array with all the 
-		/// debug messengers this class will have</param>
-		public MessengerClass(params IMessenger []messengers)
+		/// <param name="debuggingoutput">true to send debugging output
+		/// using the messengers; false otherwise</param>
+		/// <param name="messengers">optional array with all the
+		/// messengers this class can use</param>
+		public MessengerClass(bool debuggingoutput, params IMessenger []messengers)
 		{
 			if (messengers != null && messengers.Length > 0)
-				boss = new MessengersBoss(messengers);
+				boss = new MessengersBoss(debuggingoutput, messengers);
 			else
 				boss = new MessengersBoss();
 		}
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="messengers">optional array with all the
+		/// messengers this class can use</param>
+		public MessengerClass(params IMessenger []messengers)
+			: this(true, messengers)
+		{ }
+		
 		
 		/// <summary>
 		/// Destructor
@@ -51,7 +63,17 @@ namespace OBTUtils.Messaging
 		/// <summary>
 		/// Gets the messengers manager
 		/// </summary>
+		[Obsolete("This property is deprecated, use TheMessengersBoss instead")]
 		public MessengersBoss Boss {
+			get {
+				return boss;
+			}
+		}
+		
+		/// <summary>
+		/// Gets the messengers manager
+		/// </summary>
+		public MessengersBoss TheMessengersBoss {
 			get {
 				return boss;
 			}

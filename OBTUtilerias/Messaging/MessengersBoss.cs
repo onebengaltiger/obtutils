@@ -50,7 +50,6 @@ namespace OBTUtils.Messaging
 		/// <param name="senddebugoutput">True to send debugging message to the output
 		/// devices; false otherwise</param>
 		/// <param name="somemessengers">Array containing all the messengers</param>
-		/// <see cref="sendMessage" />
 		public MessengersBoss(int mainmessenger, bool senddebugoutput,
 		                      params IMessenger []somemessengers)
 		{
@@ -118,7 +117,7 @@ namespace OBTUtils.Messaging
 		/// <param name="args">arguments to be replaced inside
 		/// the format string</param>
 		/// <see cref="IMessenger.sendMessage" />
-		[Obsolete]
+		[Obsolete("This method is deprecated, use sendMessage(title, format, args) instead")]
 		public void sendMessage(string format, params object []args)
 		{
 			if (messengers.Length > 0)
@@ -191,7 +190,7 @@ namespace OBTUtils.Messaging
 		/// <param name="args">arguments to be replaced inside
 		/// the format string</param>
 		/// <see cref="IMessenger.sendMessage" />
-		[Obsolete]
+		[Obsolete("This method is deprecated, use broadcastMessage(title, format, args) instead")]
 		public void broadcastMessage(string format, params object []args)
 		{
 			foreach (IMessenger aMessenger in messengers)
@@ -272,7 +271,13 @@ namespace OBTUtils.Messaging
 		/// Indicates whether debugging output is turn on
 		/// </summary>
 		public bool SendDebugging {
-			get { return sendDebugging; }
+			get { 
+				return sendDebugging; 
+			}
+			
+			set {
+				sendDebugging = value;
+			}
 		}
 		
 		
@@ -282,7 +287,7 @@ namespace OBTUtils.Messaging
 		/// <param name="format">Formatting string</param>
 		/// <param name="args">arguments to be replaced inside
 		/// the format string</param>
-		[Obsolete]
+		[Obsolete("This method is deprecated, use sendDebugMessage(title, format, args) instead")]
 		public void sendDebugMessage(string format, params object []args)
 		{
 			if (sendDebugging)
@@ -308,7 +313,7 @@ namespace OBTUtils.Messaging
 		/// <param name="format">Formatting string</param>
 		/// <param name="args">arguments to be replaced inside
 		/// the format string</param>
-		[Obsolete]
+		[Obsolete("This method is deprecated, use broadcastDebugMessage(title, format, args) instead")]
 		public void broadcastDebugMessage(string format, params object []args)
 		{
 			if (sendDebugging)

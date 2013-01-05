@@ -30,6 +30,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Lista de deseos.txt = Lista de deseos.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBTUtils.Enterprise", "OBTUtils.Enterprise\OBTUtils.Enterprise.csproj", "{7373219C-70A8-4A0A-8105-5673590AC271}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -64,6 +66,10 @@ Global
 		{8EEE490A-20D3-42BA-842D-D09E87D051B4}.Debug|x86.ActiveCfg = Debug|x86
 		{8EEE490A-20D3-42BA-842D-D09E87D051B4}.Release|x86.Build.0 = Release|x86
 		{8EEE490A-20D3-42BA-842D-D09E87D051B4}.Release|x86.ActiveCfg = Release|x86
+		{7373219C-70A8-4A0A-8105-5673590AC271}.Debug|x86.Build.0 = Debug|x86
+		{7373219C-70A8-4A0A-8105-5673590AC271}.Debug|x86.ActiveCfg = Debug|x86
+		{7373219C-70A8-4A0A-8105-5673590AC271}.Release|x86.Build.0 = Release|x86
+		{7373219C-70A8-4A0A-8105-5673590AC271}.Release|x86.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3D2AA90C-AFDD-4B31-964E-4E5C56586D7F} = {D2EFF688-6750-44A1-98DB-85D45D9CEC97}

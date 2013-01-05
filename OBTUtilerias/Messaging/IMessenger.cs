@@ -25,7 +25,7 @@ namespace OBTUtils.Messaging
 		/// the format string</param>
 		/// <remarks>This method is obsolete, please use the other methods
 		/// in the interface</remarks>
-		[Obsolete]
+		[Obsolete("This method is deprecated, use sendMessage(title, format, args) instead")]
 		void sendMessage(string format, params object []args);
 		
 		/// <summary>

@@ -14,7 +14,10 @@ using System.Collections.Generic;
 
 namespace OBTUtils
 {
-	public delegate ICollection<T> buscadorReal<T>(string criteriobusqueda);
+	/// <summary>
+	/// Delegate type to execute the search
+	/// </summary>
+	public delegate ICollection<T> realSeeker<T>(string criteriobusqueda);
 	
 	
 	/// <summary>
@@ -33,52 +36,52 @@ namespace OBTUtils
 		/// <summary>
 		/// Criterio anterior de busqueda
 		/// </summary>
-		private string criterioAnterior;
+		private string lastcriterion;
 		
 		/// <summary>
 		/// Delegado que implementa el método real
 		/// de busqueda
 		/// </summary>
-		buscadorReal<T> elBuscador;
+		private realSeeker<T> theseeker;
 		
 		/// <summary>
 		/// Resultado anterior de busqueda
 		/// </summary>
-		ICollection<T> resultadoAnterior;
+		private ICollection<T> lastresult;
 		
 		
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="buscador">Delegado que implementa el método real
+		/// <param name="oneseeker">Delegado que implementa el método real
 		/// de busqueda</param>
-		/// <param name="criterioInicial">Criterio inicial de busqueda</param>
-		public IncrementalSeeker(buscadorReal<T> buscador, string criterioInicial)
+		/// <param name="initialcriterion">Criterio inicial de busqueda</param>
+		public IncrementalSeeker(realSeeker<T> oneseeker, string initialcriterion)
 		{
-			elBuscador = buscador;
-			criterioAnterior = criterioInicial;
-			resultadoAnterior = coleccionVacia();
+			theseeker = oneseeker;
+			lastcriterion = initialcriterion;
+			lastresult = emptyCollection();
 		}
 		
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="buscador">Delegado que implementa el método real
+		/// <param name="oneseeker">Delegado que implementa el método real
 		/// de busqueda</param>
-		public IncrementalSeeker(buscadorReal<T> buscador)
-			: this(buscador, String.Empty) { }
+		public IncrementalSeeker(realSeeker<T> oneseeker)
+			: this(oneseeker, String.Empty) { }
 		
 		
 		/// <summary>
 		/// Destructor
 		/// </summary>
 		~IncrementalSeeker() {
-			elBuscador = null;
-			criterioAnterior = null;
+			theseeker = null;
+			lastcriterion = null;
 			
-			if (resultadoAnterior != null) {
-				resultadoAnterior.Clear();
-				resultadoAnterior = null;
+			if (lastresult != null) {
+				lastresult.Clear();
+				lastresult = null;
 			}
 		}
 		
@@ -87,13 +90,13 @@ namespace OBTUtils
 		/// Obtiene o asigna el criterio para realizar
 		/// la busqueda
 		/// </summary>
-		public string CriterioAnterior {
+		public string Lastcriterion {
 			get {
-				return criterioAnterior;
+				return lastcriterion;
 			}
 			
 			set {
-				criterioAnterior = value;
+				lastcriterion = value;
 			}
 		}
 		
@@ -101,9 +104,9 @@ namespace OBTUtils
 		/// Obtiene o asigna al delegado que implementa el método real
 		/// de busqueda
 		/// </summary>
-		public buscadorReal<T> ElBuscador {
+		public realSeeker<T> Theseeker {
 			get {
-				return elBuscador;
+				return theseeker;
 			}
 		}
 		
@@ -112,23 +115,23 @@ namespace OBTUtils
 		/// Realiza una busqueda usando al delegado de busqueda con
 		/// el criterio dado
 		/// </summary>
-		/// <param name="criterio">El criterio de la busqueda</param>
-		/// <param name="realizaBusquedalocal">indica si se hace una busqueda "loca",
+		/// <param name="criterion">El criterio de la busqueda</param>
+		/// <param name="dolocalsearch">indica si se hace una busqueda "loca",
 		/// es decir, si se utilizan los resultados previamente obtenidos de una
 		/// busqueda anterior</param>
 		/// <returns>Una colección de valores, que son el resultado
 		/// de la busqueda hecha</returns>
-		public ICollection<T> busca(string criterio, bool realizaBusquedalocal) {
+		public ICollection<T> search(string criterion, bool dolocalsearch) {
 			ICollection<T> retVal = null;
 			
-			if (esCriterioValido(criterio)) {
-				if (!esCriterioValido(criterioAnterior))
-					retVal = usaBuscador(criterio);
+			if (isValidCriterion(criterion)) {
+				if (!isValidCriterion(lastcriterion))
+					retVal = useSeeker(criterion);
 				else {
-					if (!criterio.Contains(criterioAnterior))
-						retVal = usaBuscador(criterio);
-					else if (realizaBusquedalocal)
-						retVal = hazBusquedalocal(criterio, null);
+					if (!criterion.Contains(lastcriterion))
+						retVal = useSeeker(criterion);
+					else if (dolocalsearch)
+						retVal = executeLocalSearch(criterion, null);
 				}
 			}
 			
@@ -140,7 +143,7 @@ namespace OBTUtils
 		/// Regresa la colección vacía
 		/// </summary>
 		/// <returns>La colección vacía</returns>
-		private ICollection<T> coleccionVacia() {
+		private ICollection<T> emptyCollection() {
 			return new List<T>(0);
 		}
 		
@@ -151,7 +154,7 @@ namespace OBTUtils
 		/// <param name="criterio">Cadena que será provada</param>
 		/// <returns>true si la cadena dada como parámetro es un criterio
 		/// de busqueda válido; false en otro caso</returns>
-		private bool esCriterioValido(string criterio) {
+		private bool isValidCriterion(string criterio) {
 			return !String.IsNullOrEmpty(criterio)
 				&& !String.IsNullOrWhiteSpace(criterio);
 		}
@@ -160,16 +163,16 @@ namespace OBTUtils
 		/// Realiza la busqueda usando el delegado buscador y el criterio
 		/// dado por el parámetro
 		/// </summary>
-		/// <param name="criterio">Criterio de busqueda</param>
+		/// <param name="criterion">Criterio de busqueda</param>
 		/// <returns>Una colección de tipo T que representa el resultado
 		/// de la busqueda</returns>
-		private ICollection<T> usaBuscador(string criterio) {
+		private ICollection<T> useSeeker(string criterion) {
 			ICollection<T> retVal;
 			
-			retVal = elBuscador(criterio);
+			retVal = theseeker(criterion);
 			
-			criterioAnterior = criterio;
-			resultadoAnterior = retVal;
+			lastcriterion = criterion;
+			lastresult = retVal;
 			
 			return retVal;
 		}
@@ -180,24 +183,25 @@ namespace OBTUtils
 		/// verificar si item1 contiene a item2, en tal caso, el delegado
 		/// debe dar como resultado true y false en caso contrario
 		/// </summary>
-		private delegate bool contiene(T item1, string item2);
+		private delegate bool containsItemTest(T item1, string item2);
 		
 		
 		/// <summary>
 		/// Realiza una busqueda local en la colección del resultado de busqueda
 		/// anterior, usando el criterio dado por el parámetro criterio
 		/// </summary>
-		/// <param name="criterio">Criterio de busqueda</param>
-		/// <param name="prueba">Delegado para verificar si un elemento de la lista
+		/// <param name="criterion">Criterio de busqueda</param>
+		/// <param name="testmethod">Delegado para verificar si un elemento de la lista
 		/// del resultado anterior de busqueda contiene al criterio de busqueda</param>
 		/// <returns>El resultado de la busqueda</returns>
-		private ICollection<T> hazBusquedalocal(string criterio, contiene prueba)
+		private ICollection<T> executeLocalSearch(string criterion,
+		                                          containsItemTest testmethod)
 		{
 			ICollection<T> retVal = null;
 			
-			if (resultadoAnterior != null) {
-				var cmSelect = (from item in resultadoAnterior
-				                where prueba(item, criterio)
+			if (lastresult != null) {
+				var cmSelect = (from item in lastresult
+				                where testmethod(item, criterion)
 				                select item).Distinct();
 				
 				retVal = new List<T>(cmSelect);
