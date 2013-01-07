@@ -21,31 +21,30 @@ namespace OBTUtils
 	
 	
 	/// <summary>
-	/// Implementa un buscador tipo incremental. La idea básica es que
-	///  cuando se le da un criterio de busqueda a un objeto de esta clase
-	/// por primera vez, el objeto guarda el criterio de busqueda y regresa
-	/// ciertos resultados. En busquedas subsecuentes, el buscador verifica
-	/// si el criterio de busqueda nuevo contiene el criterio de busqueda anterior,
-	/// y si es asi, regresa un resultado que indica que no se realizo busqueda
-	/// nueva, porque la busqueda anterior ya debe contener la busqueda nueva.
+	/// A class used to implement an incremental-type data seeker. Given an 
+	/// object of type IncrementalSeeker, the first time this object is given
+	///  a search criterion, the object stores this criterion and executed the search
+	/// to return some values. In subsequent searches, the seeker compares the old 
+	/// search criterion with the new one; if the new criterion contains the old one,
+	/// then the return value of the search indicates that no search at all was performed,
+	/// because the results of the last search must contain the results of the new search.
 	/// </summary>
 	/// 
 	/// <remarks>\author Rodolfo Conde</remarks>
 	public class IncrementalSeeker<T>
 	{
 		/// <summary>
-		/// Criterio anterior de busqueda
+		/// Last search's criterion
 		/// </summary>
 		private string lastcriterion;
 		
 		/// <summary>
-		/// Delegado que implementa el método real
-		/// de busqueda
+		/// The method that realizes the search
 		/// </summary>
 		private realSeeker<T> theseeker;
 		
 		/// <summary>
-		/// Resultado anterior de busqueda
+		/// Last search's result
 		/// </summary>
 		private ICollection<T> lastresult;
 		
@@ -53,9 +52,8 @@ namespace OBTUtils
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="oneseeker">Delegado que implementa el método real
-		/// de busqueda</param>
-		/// <param name="initialcriterion">Criterio inicial de busqueda</param>
+		/// <param name="oneseeker">The method that realizes the search</param>
+		/// <param name="initialcriterion">Initial criterion</param>
 		public IncrementalSeeker(realSeeker<T> oneseeker, string initialcriterion)
 		{
 			theseeker = oneseeker;
@@ -66,8 +64,7 @@ namespace OBTUtils
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="oneseeker">Delegado que implementa el método real
-		/// de busqueda</param>
+		/// <param name="oneseeker">The method that realizes the search</param>
 		public IncrementalSeeker(realSeeker<T> oneseeker)
 			: this(oneseeker, String.Empty) { }
 		
@@ -87,8 +84,7 @@ namespace OBTUtils
 		
 		
 		/// <summary>
-		/// Obtiene o asigna el criterio para realizar
-		/// la busqueda
+		/// Gets or sets a search criterion
 		/// </summary>
 		public string Lastcriterion {
 			get {
@@ -101,8 +97,7 @@ namespace OBTUtils
 		}
 		
 		/// <summary>
-		/// Obtiene o asigna al delegado que implementa el método real
-		/// de busqueda
+		/// Gets or sets the method that realizes the search
 		/// </summary>
 		public realSeeker<T> Theseeker {
 			get {
@@ -112,15 +107,14 @@ namespace OBTUtils
 		
 		
 		/// <summary>
-		/// Realiza una busqueda usando al delegado de busqueda con
-		/// el criterio dado
+		/// Executes a search using the delegate Theseeker with the given 
+		/// search criterion
 		/// </summary>
-		/// <param name="criterion">El criterio de la busqueda</param>
-		/// <param name="dolocalsearch">indica si se hace una busqueda "loca",
-		/// es decir, si se utilizan los resultados previamente obtenidos de una
-		/// busqueda anterior</param>
-		/// <returns>Una colección de valores, que son el resultado
-		/// de la busqueda hecha</returns>
+		/// <param name="criterion">Current search's criterion</param>
+		/// <param name="dolocalsearch">true to execute a "local" search, that is, 
+		/// the seeker uses the results of the previous search
+		/// </param>
+		/// <returns>A collection of values related to the given search criterion</returns>
 		public ICollection<T> search(string criterion, bool dolocalsearch) {
 			ICollection<T> retVal = null;
 			
@@ -148,24 +142,24 @@ namespace OBTUtils
 		}
 		
 		/// <summary>
-		/// Indica si la cadena dada como parámetro es un criterio
-		/// de busqueda válido
+		/// Computes a boolean value that indicates if the given string 
+		/// is a valid search criterion
 		/// </summary>
-		/// <param name="criterio">Cadena que será provada</param>
-		/// <returns>true si la cadena dada como parámetro es un criterio
-		/// de busqueda válido; false en otro caso</returns>
+		/// <param name="criterio">A string to test</param>
+		/// <returns>true if the given string is a valid search criterion; 
+		/// false otherwise</returns>
 		private bool isValidCriterion(string criterio) {
 			return !String.IsNullOrEmpty(criterio)
 				&& !String.IsNullOrWhiteSpace(criterio);
 		}
 		
 		/// <summary>
-		/// Realiza la busqueda usando el delegado buscador y el criterio
-		/// dado por el parámetro
+		/// Executes a search in the data using the delegate Theseeker and the
+		/// given search's criterion
 		/// </summary>
-		/// <param name="criterion">Criterio de busqueda</param>
-		/// <returns>Una colección de tipo T que representa el resultado
-		/// de la busqueda</returns>
+		/// <param name="criterion">The search's criterion</param>
+		/// <returns>A collection of objects of type T representing the result
+		/// of the search</returns>
 		private ICollection<T> useSeeker(string criterion) {
 			ICollection<T> retVal;
 			
@@ -179,21 +173,22 @@ namespace OBTUtils
 		
 		
 		/// <summary>
-		/// Delegado interno para realizar una prueba para
-		/// verificar si item1 contiene a item2, en tal caso, el delegado
-		/// debe dar como resultado true y false en caso contrario
+		/// Internal delegate to realize a test to determine if 
+		/// item1 contains item2. If this is the case, the delegate must give true 
+		/// as the return value and false otherwise
 		/// </summary>
 		private delegate bool containsItemTest(T item1, string item2);
 		
 		
 		/// <summary>
-		/// Realiza una busqueda local en la colección del resultado de busqueda
-		/// anterior, usando el criterio dado por el parámetro criterio
+		/// Searchs for items containing the string criterion in the results 
+		/// of the last search
 		/// </summary>
-		/// <param name="criterion">Criterio de busqueda</param>
-		/// <param name="testmethod">Delegado para verificar si un elemento de la lista
-		/// del resultado anterior de busqueda contiene al criterio de busqueda</param>
-		/// <returns>El resultado de la busqueda</returns>
+		/// <param name="criterion">The search's criterion</param>
+		/// <param name="testmethod">A delegate of type containsItemTest to execute the 
+		/// search</param>
+		/// <returns>A collection of values of type T, representing the result of 
+		/// the search</returns>
 		private ICollection<T> executeLocalSearch(string criterion,
 		                                          containsItemTest testmethod)
 		{

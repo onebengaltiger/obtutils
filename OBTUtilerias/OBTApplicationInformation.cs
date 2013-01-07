@@ -13,7 +13,7 @@ using System.Collections.Generic;
 namespace OBTUtils
 {
 	/// <summary>
-	/// Contains general information about the current application
+	/// Contains general information about the OBTUtils libraries family
 	/// </summary>
 	/// 
 	/// <remarks>\author \rconde</remarks>

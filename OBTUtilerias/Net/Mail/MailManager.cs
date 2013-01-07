@@ -48,12 +48,12 @@ namespace OBTUtils.Net.Mail
 		/// operations by the smtp client</param>
 		/// <param name="ntrytosendemail">Maximum numbers of times
 		/// to try to send mails in the method sendMail</param>
-		/// <param name="debuggers">All available debug messengers to be used to
-		/// debug this component</param>
+		/// <param name="messengers">All available messengers to be used
+		/// in this component</param>
 		public MailManager(Container container, int timeoutsmptclient,
 		                   byte ntrytosendemail,
-		                   params IMessenger []debuggers)
-			: this(container, timeoutsmptclient, debuggers)
+		                   params IMessenger []messengers)
+			: this(container, timeoutsmptclient, messengers)
 		{
 			NtryTosendMails = ntrytosendemail;
 		}
@@ -64,12 +64,12 @@ namespace OBTUtils.Net.Mail
 		/// <param name="container">The container in which we store this component</param>
 		/// <param name="ntrytosendemail">Maximum numbers of times
 		/// to try to send mails in the method sendMail</param>
-		/// <param name="debuggers">All available debug messengers to be used to
-		/// debug this component</param>
+		/// <param name="messengers">All available messengers to be used in
+		/// this component</param>
 		public MailManager(Container container,
 		                   byte ntrytosendemail,
-		                   params IMessenger []debuggers)
-			: this(container, debuggers)
+		                   params IMessenger []messengers)
+			: this(container, messengers)
 		{
 			NtryTosendMails = ntrytosendemail;
 		}
@@ -80,11 +80,11 @@ namespace OBTUtils.Net.Mail
 		/// <param name="container">The container in which we store this component</param>
 		/// <param name="timeoutsmptclient">Maximum waiting time to complete the
 		/// operations by the smtp client</param>
-		/// <param name="debuggers">All available debug messengers to be used to
-		/// debug this component</param>
+		/// <param name="messengers">All available messengers to be used in
+		/// this component</param>
 		public MailManager(Container container, int timeoutsmptclient,
-		                   params IMessenger []debuggers)
-			: base(container, debuggers)
+		                   params IMessenger []messengers)
+			: base(container, messengers)
 		{
 			TimeoutSMTPClient = timeoutsmptclient;
 		}
@@ -93,11 +93,11 @@ namespace OBTUtils.Net.Mail
 		/// Constructor
 		/// </summary>
 		/// <param name="container">The container in which we store this component</param>
-		/// <param name="debuggers">All available debug messengers to be used to
-		/// debug this component</param>
+		/// <param name="messengers">All available messengers to be used in
+		/// this component</param>
 		public MailManager(Container container,
-		                   params IMessenger []debuggers)
-			: base(container, debuggers)
+		                   params IMessenger []messengers)
+			: base(container, messengers)
 		{ }
 		
 		/// <summary>
@@ -139,8 +139,8 @@ namespace OBTUtils.Net.Mail
 			msg.Body = body;
 			//msg.IsBodyHtml = false;
 			
-			if (attatchments != null) 
-				foreach (Attachment a in attatchments) 
+			if (attatchments != null)
+				foreach (Attachment a in attatchments)
 					msg.Attachments.Add(a);
 			
 			SmtpClient smtpc = new SmtpClient(smtpserver);
@@ -186,21 +186,20 @@ namespace OBTUtils.Net.Mail
 		}
 		
 		/// <summary>
-		/// Prepara el contenido de flujo de datos Stream para 
-		/// ser enviado como archivo adjunto usando la clase de 
-		/// .Net Attachment
+		/// Builds an attachment (an instance of the .Net Attachment class)
+		/// with the contents of the stream contents
 		/// </summary>
-		/// <param name="nombre">Nombre del archivo adjunto</param>
-		/// <param name="contenido">Contenido del archivo adjunto</param>
-		/// <param name="tipoContenido">Tipo MIME del contenido 
+		/// <param name="nombre">The attachment's name</param>
+		/// <param name="contenido">The attachment's contents</param>
+		/// <param name="tipoContenido">Attachment's MIME type
 		/// (i.e. .pdf, .txt, .jpg, etc)</param>
-		/// <returns>Un objeto de tipo Attachment con los datos 
-		/// dados por los argumentos</returns>
-		public static Attachment buildAttachment(string nombre, Stream contenido,
-		                                         string tipoContenido)
+		/// <returns>An object of type attachment with the information given
+		/// in the arguments</returns>
+		public static Attachment buildAttachment(string attname, Stream contents,
+		                                         string contentstype)
 		{
-			Attachment att = new Attachment(contenido, tipoContenido);
-			att.Name = nombre;
+			Attachment att = new Attachment(contents, contentstype);
+			att.Name = attname;
 			
 			return att;
 		}

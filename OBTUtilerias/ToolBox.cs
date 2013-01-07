@@ -182,14 +182,27 @@ namespace OBTUtils
 		}
 		
 		/// <summary>
-		/// Print all the elements of the collection theobjects,
-		/// using the messengers given in theboss
+		/// Builds a string that contains the list of all the objects given
+		/// in the collection theobjects
 		/// </summary>
 		/// <param name="theobjects">A collection of objects</param>
-		/// <param name="theboss">The IMessenger's boss that contains the messengers
-		/// to use</param>
-		public static void printObjects(IEnumerator theobjects,
-		                                MessengersBoss theboss) {
+		/// <returns>A string that contains the list of all the objects given
+		/// in the collection theobjects</returns>
+		public static string dumpObjects(IEnumerator theobjects) {
+			StringBuilder builder = new StringBuilder();
+			
+			dumpObjects(theobjects, builder);
+			
+			return builder.ToString();
+		}
+		
+		/// <summary>
+		/// Prints in the buffer of the StringBuilder strbuilder all the elements
+		/// of the collection theobjects
+		/// </summary>
+		/// <param name="theobjects">A collection of objects</param>
+		public static void dumpObjects(IEnumerator theobjects,
+		                               StringBuilder strbuilder) {
 			object anobject;
 			bool movenext;
 			
@@ -197,11 +210,178 @@ namespace OBTUtils
 			movenext = theobjects.MoveNext();
 			
 			while (movenext) {
-				theboss.broadcastMessage("{0}{1}",
-				                         theobjects.Current.ToString(),
-				                         ((movenext = theobjects.MoveNext()) == true
-				                          ? ", " : String.Empty));
+				strbuilder.AppendFormat("{0}{1}",
+				                        theobjects.Current,
+				                        ((movenext = theobjects.MoveNext()) == true
+				                         ? ", " : String.Empty));
 			}
+		}
+		
+		/// <summary>
+		/// Builds a string that contains the list of all the objects given
+		/// in the collection theobjects
+		/// </summary>
+		/// <param name="theobjects">A collection of objects</param>
+		/// <returns>A string that contains the list of all the objects given
+		/// in the collection theobjects</returns>
+		public static string dumpObjects(ICollection theobjects) {
+			return dumpObjects(theobjects);
+		}
+		
+		/// <summary>
+		/// Prints in the buffer of the StringBuilder strbuilder all the elements
+		/// of the collection theobjects
+		/// </summary>
+		/// <param name="theobjects">A collection of objects</param>
+		public static void dumpObjects(ICollection theobjects,
+		                               StringBuilder strbuilder) {
+			dumpObjects(theobjects, strbuilder);
+		}
+		
+		/// <summary>
+		/// Print all the elements of the collection theobjects,
+		/// using one of the messengers given in theboss
+		/// </summary>
+		/// <param name="theobjects">A collection of objects</param>
+		/// <param name="theboss">The IMessenger's boss that contains the messengers
+		/// to use</param>
+		/// <param name="title">A title for the message containing the objects of
+		/// the collection theobjects</param>
+		/// <param name="usethismessenger">An index for the messenger's boss theboss, which
+		///  is used to choose which messenger to use</param>
+		public static void dumpObjects(IEnumerator theobjects,
+		                               MessengersBoss theboss,
+		                               string title, int usethismessenger) {
+			StringBuilder builder = new StringBuilder();
+			object anobject;
+			bool movenext;
+			
+			theobjects.Reset();
+			movenext = theobjects.MoveNext();
+			
+			while (movenext) {
+				builder.AppendFormat("{0}{1}",
+				                     theobjects.Current,
+				                     ((movenext = theobjects.MoveNext()) == true
+				                      ? ", " : String.Empty));
+			}
+			
+			theboss.Messengers[usethismessenger].sendMessage(title, builder.ToString());
+		}
+		
+		/// <summary>
+		/// Print all the elements of the collection theobjects,
+		/// using all the messengers given in theboss
+		/// </summary>
+		/// <param name="theobjects">A collection of objects</param>
+		/// <param name="theboss">The IMessenger's boss that contains the messengers
+		/// to use</param>
+		/// <param name="title">A title for the message containing the objects of
+		/// the collection theobjects</param>
+		public static void dumpObjects(IEnumerator theobjects,
+		                               MessengersBoss theboss,
+		                               string title) {
+			StringBuilder builder = new StringBuilder();
+			object anobject;
+			bool movenext;
+			
+			theobjects.Reset();
+			movenext = theobjects.MoveNext();
+			
+			while (movenext) {
+				builder.AppendFormat("{0}{1}",
+				                     theobjects.Current,
+				                     ((movenext = theobjects.MoveNext()) == true
+				                      ? ", " : String.Empty));
+			}
+			
+			theboss.broadcastMessage(title, builder.ToString());
+		}
+		
+		/// <summary>
+		/// Print all the elements of the collection theobjects,
+		/// using one of the messengers given in theboss
+		/// </summary>
+		/// <param name="theobjects">A collection of objects</param>
+		/// <param name="theboss">The IMessenger's boss that contains the messengers
+		/// to use</param>
+		/// <param name="usethismessenger">An index for the messenger's boss theboss, which
+		///  is used to choose which messenger to use</param>
+		public static void dumpObjects(IEnumerator theobjects,
+		                               MessengersBoss theboss,
+		                               int usethismessenger) {
+			dumpObjects(theobjects, theboss, String.Empty, usethismessenger);
+		}
+		
+		/// <summary>
+		/// Print all the elements of the collection theobjects,
+		/// using all the messengers given in theboss
+		/// </summary>
+		/// <param name="theobjects">A collection of objects</param>
+		/// <param name="theboss">The IMessenger's boss that contains the messengers
+		/// to use</param>
+		public static void dumpObjects(IEnumerator theobjects,
+		                               MessengersBoss theboss) {
+			dumpObjects(theobjects, theboss, String.Empty);
+		}
+		
+		/// <summary>
+		/// Print all the elements of the collection theobjects,
+		/// using the messengers given in theboss
+		/// </summary>
+		/// <param name="theobjects">A collection of objects</param>
+		/// <param name="theboss">The IMessenger's boss that contains the messengers
+		/// to use</param>
+		/// <param name="title">A title for the message containing the objects of
+		/// the collection theobjects</param>
+		/// <param name="usethismessenger">An index for the messenger's boss theboss, which
+		///  is used to choose which messenger to use</param>
+		public static void dumpObjects(ICollection theobjects,
+		                               MessengersBoss theboss,
+		                               string title, int usethismessenger) {
+			dumpObjects(theobjects, theboss, title, usethismessenger);
+		}
+		
+		/// <summary>
+		/// Print all the elements of the collection theobjects,
+		/// using all the messengers given in theboss
+		/// </summary>
+		/// <param name="theobjects">A collection of objects</param>
+		/// <param name="theboss">The IMessenger's boss that contains the messengers
+		/// to use</param>
+		/// <param name="title">A title for the message containing the objects of
+		/// the collection theobjects</param>
+		public static void dumpObjects(ICollection theobjects,
+		                               MessengersBoss theboss,
+		                               string title) {
+			dumpObjects(theobjects, theboss, title);
+		}
+		
+		/// <summary>
+		/// Print all the elements of the collection theobjects,
+		/// using one of the messengers given in theboss
+		/// </summary>
+		/// <param name="theobjects">A collection of objects</param>
+		/// <param name="theboss">The IMessenger's boss that contains the messengers
+		/// to use</param>
+		/// <param name="usethismessenger">An index for the messenger's boss theboss, which
+		///  is used to choose which messenger to use</param>
+		public static void dumpObjects(ICollection theobjects,
+		                               MessengersBoss theboss,
+		                               int usethismessenger) {
+			dumpObjects(theobjects, theboss, String.Empty, usethismessenger);
+		}
+		
+		/// <summary>
+		/// Print all the elements of the collection theobjects,
+		/// using all the messengers given in theboss
+		/// </summary>
+		/// <param name="theobjects">A collection of objects</param>
+		/// <param name="theboss">The IMessenger's boss that contains the messengers
+		/// to use</param>
+		public static void dumpObjects(ICollection theobjects,
+		                               MessengersBoss theboss) {
+			dumpObjects(theobjects, theboss, String.Empty);
 		}
 	}
 }
