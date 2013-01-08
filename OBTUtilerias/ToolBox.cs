@@ -63,68 +63,77 @@ namespace OBTUtils
 		}
 		
 		/// <summary>
-		/// Regresa una representación en cadena de caracteres hexadecimales
-		/// de una parte del contenido del arreglo de bytes
+		/// Builds a string representation (in hex format) of a portion of
+		/// the array of bytes
 		/// </summary>
-		/// <param name="arreglo">Un arreglo de bytes</param>
-		/// <param name="principio">Indica en que lugar de arreglo comenzar a convertir</param>
-		/// <param name="cuantos">Indica cuantos elementos del arreglo convertir</param>
-		/// <returns>Una cadena que representa parte del contenido del arreglo de bytes</returns>
-		public static string byteArray2String(byte []arreglo,
-		                                      int principio, int cuantos) {
-			return byteArray2StringBuilder(arreglo, principio, cuantos).ToString();
+		/// <param name="buffer">An array of bytes</param>
+		/// <param name="initialposition">The initial position in the array from which 
+		/// the string will be build</param>
+		/// <param name="length">This parameter says how many bytes to copy into the 
+		/// returned string</param>
+		/// <returns>A string representation, in hexadecimal format, of a portion of 
+		/// the array of bytes</returns>
+		public static string byteArray2String(byte []buffer,
+		                                      int initialposition, int length) {
+			return byteArray2StringBuilder(buffer, initialposition, length).ToString();
 		}
 		
 		/// <summary>
-		/// Regresa una representación en cadena de caracteres hexadecimales
-		/// de una parte del contenido del arreglo de bytes
+		/// Builds a string representation (in hex format) of 
+		/// the array of bytes
 		/// </summary>
-		/// <param name="arreglo">Un arreglo de bytes</param>
-		/// <returns>Una cadena que representa parte del contenido del arreglo de bytes</returns>
-		public static string byteArray2String(byte []arreglo) {
-			return byteArray2String(arreglo, 0, arreglo.Length);
+		/// <param name="buffer">An array of bytes</param>
+		/// <returns>A string representation, in hexadecimal format, of a portion of 
+		/// the array of bytes</returns>
+		public static string byteArray2String(byte []buffer) {
+			return byteArray2String(buffer, 0, buffer.Length);
 		}
 		
 		/// <summary>
-		/// Regresa una representación en arreglo de caracteres hexadecimales
-		/// de una parte del contenido del arreglo de bytes
+		/// Builds a char array representation (with characters in hex format) 
+		/// of a portion of the array of bytes
 		/// </summary>
-		/// <param name="arreglo">Un arreglo de bytes</param>
-		/// <param name="principio">Indica en que lugar de arreglo comenzar a convertir</param>
-		/// <param name="cuantos">Indica cuantos elementos del arreglo convertir</param>
-		/// <returns>Una arreglo de caracteres que representa parte
-		/// del contenido del arreglo de bytes</returns>
-		public static char[] byteArray2charArray(byte []arreglo,
-		                                         int principio, int cuantos) {
-			StringBuilder contructorcadena =
-				byteArray2StringBuilder(arreglo, principio, cuantos);
-			char []retVal = new char[contructorcadena.Length];
+		/// <param name="buffer">An array of bytes</param>
+		/// <param name="initialposition">The initial position in the array from which 
+		/// the string will be build</param>
+		/// <param name="length">This parameter says how many bytes to copy into the 
+		/// returned string</param>
+		/// <returns>A character arrya representation, with characters in hexadecimal 
+		/// format, of a portion of the array of bytes</returns>
+		public static char[] byteArray2charArray(byte []buffer,
+		                                         int initialposition, int length) {
+			StringBuilder strbuilder =
+				byteArray2StringBuilder(buffer, initialposition, length);
+			char []retVal = new char[strbuilder.Length];
 			
-			contructorcadena.CopyTo(0, retVal, 0, retVal.Length);
+			strbuilder.CopyTo(0, retVal, 0, retVal.Length);
 			
 			return retVal;
 		}
 		
 		/// <summary>
-		/// Regresa una representación en arreglo de caracteres hexadecimales
-		/// del contenido del arreglo de bytes
+		/// Builds a char array representation (with characters in hex format) 
+		/// of a portion of the array of bytes
 		/// </summary>
-		/// <param name="arreglo">Un arreglo de bytes</param>
-		/// <returns>Una arreglo de caracteres que representa
-		/// el contenido del arreglo de bytes</returns>
-		public static char[] byteArray2charArray(byte []arreglo) {
-			return byteArray2charArray(arreglo, 0, arreglo.Length);
+		/// <param name="buffer">An array of bytes</param>
+		/// <returns>A character array representation, with characters in hexadecimal 
+		/// format, of a portion of the array of bytes</returns>
+		public static char[] byteArray2charArray(byte []buffer) {
+			return byteArray2charArray(buffer, 0, buffer.Length);
 		}
 		
 		
 		/// <summary>
-		/// Regresa una representación en cadena de caracteres hexadecimales
-		/// de una parte del contenido del arreglo de bytes
+		/// Builds a StringBuilder containing a buffer of chars representing 
+		/// (with characters in hex format) a portion of the array of bytes
 		/// </summary>
-		/// <param name="arreglo">Un arreglo de bytes</param>
-		/// <param name="principio">Indica en que lugar de arreglo comenzar a convertir</param>
-		/// <param name="cuantos">Indica cuantos elementos del arreglo convertir</param>
-		/// <returns>Una cadena que representa parte del contenido del arreglo de bytes</returns>
+		/// <param name="buffer">An array of bytes</param>
+		/// <param name="initialposition">The initial position in the array from which 
+		/// the string will be build</param>
+		/// <param name="length">This parameter says how many bytes to copy into the 
+		/// returned string</param>
+		/// <returns>A StringBuilder object representation, with characters in hexadecimal 
+		/// format, of a portion of the array of bytes</returns>
 		private static StringBuilder byteArray2StringBuilder(byte []arreglo,
 		                                                     int principio, int cuantos) {
 			if (principio < 0 || principio > arreglo.Length - 1)

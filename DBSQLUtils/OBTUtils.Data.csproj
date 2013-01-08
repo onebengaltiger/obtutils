@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>Library</OutputType>
     <RootNamespace>OBTUtils</RootNamespace>
-    <AssemblyName>OBTDBSQLUtils</AssemblyName>
+    <AssemblyName>OBTUtils.Data</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -63,7 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\ADO\ADODBAdmin.cs" />
+    <Compile Include="Data\ADO\ADOManager.cs" />
     <Compile Include="Data\EDM\EntityTransactionManager.cs" />
     <Compile Include="Data\SQL\Generic_SQLGenerator.cs" />
     <Compile Include="OBTDataException.cs" />

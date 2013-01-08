@@ -67,26 +67,26 @@ namespace OBTUtils.Data.EDM
 		/// </summary>
 		/// <param name="messengers">An array of messengers</param>
 		public EntityTransactionManager(params IMessenger []messengers)
-			: base(messengers)
+			: base(null, messengers)
 		{ }
 		
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		public EntityTransactionManager()
-			: this((Container) null, null)
+			: this((Container) null)
 		{ }
 		
 		
 		/// <summary>
-		/// Libera recursos. Para una instancia de esta clase, si la transacción aún
-		/// está presente, intenta hacer un rollback y despues desecha el objeto de
-		/// tipo transacción. Si la conexión a la BD aun esta presente y se encuentra
-		/// en estado de abierta, esta instancia intenta cerrar la conexión y despues
-		/// la desecha.
+		/// Free resources immediately. For an instance of this class, if there is a
+		/// transaction in progress, then this method tries to rollback the transaction
+		/// and then the transaction object is freed. Also, if the connection object
+		/// is in the Open state, then this method closes the conecction and finally it
+		/// frees the connection object
 		/// </summary>
-		/// <param name="disposing"><c>true</c> si se estan liberando recursos del sistema
-		/// no manejados, <c>falso</c> en otro caso</param>
+		/// <param name="disposing"><c>true</c> if non-managed resources are to be freed;
+		/// <c>false</c> otherwise</param>
 		protected override void Dispose(bool disposing)
 		{
 			if (theTransaction != null) {
@@ -109,7 +109,7 @@ namespace OBTUtils.Data.EDM
 		
 		
 		/// <summary>
-		///  Gets and opens a transaction (with isolation leven isolationlevel) for
+		/// Gets and opens a transaction (with isolation leven isolationlevel) for
 		/// the given ObjectContext object context.
 		/// If context is null, then this method creates a new object
 		/// </summary>
@@ -121,8 +121,9 @@ namespace OBTUtils.Data.EDM
 			T context, IsolationLevel isolationlevel
 		) {
 			if (theConnection != null || theTransaction != null)
-				throw new OBTDataException("Este manejador de transacciones ya tiene" +
-				                           " una conexión y/o transacción asociado(s)");
+				throw new OBTDataException("This transaction's manager already as an " +
+				                           "associated connection and/or " +
+				                           "transaction object(s)");
 			
 			T thecontext;
 
@@ -143,7 +144,7 @@ namespace OBTUtils.Data.EDM
 		}
 		
 		/// <summary>
-		///  Gets and opens a transaction for the given ObjectContext object context.
+		/// Gets and opens a transaction for the given ObjectContext object context.
 		/// If context is null, then this method creates a new object
 		/// </summary>
 		/// <param name="context">An entity ObjectContext</param>
@@ -174,17 +175,16 @@ namespace OBTUtils.Data.EDM
 		}
 		
 		/// <summary>
-		/// Completa la transacción que esta asociada a un objeto de contexto de BD
-		///  de tipo <c>SECTBitBaseDatosContext</c> que fue construido con la función
-		/// obtenContextoConTransaccion.
+		/// Commits the transaction associated with the ObjectContext obtained
+		/// with one of the getContextWithTransaction methods
 		/// </summary>
-		/// <param name="cierraConexion"><c>true</c> si este método debe cerrar la
-		/// conexión, <c>false</c> en caso contrario</param>
+		/// <param name="cierraConexion"><c>true</c> if the connection must be closed
+		/// <c>false</c> otherwise</param>
 		private void commitTransaction(bool closeconnection) {
 			if (theConnection == null || theTransaction == null)
-				throw new OBTDataException("ManejadorTransacciones: " +
-				                           "No se tiene una conexión " +
-				                           " y/o una transacción asociada");
+				throw new OBTDataException("EntityTransactionManager: " +
+				                           "There is no associated connection and/or " +
+				                           "transaction");
 			
 			theTransaction.Commit();
 			theTransaction = null;
@@ -196,20 +196,18 @@ namespace OBTUtils.Data.EDM
 		}
 		
 		/// <summary>
-		/// Completa la transacción que esta asociada a un objeto de contexto de BD
-		///  de tipo <c>SECTBitBaseDatosContext</c> que fue construido con la función
-		/// obtenContextoConTransaccion. Este método cierra la conexión despues de
-		/// completar la transacción
+		/// Commits the transaction associated with the ObjectContext obtained
+		/// with one of the getContextWithTransaction methods. This function
+		/// closes the connection after commiting the transaction
 		/// </summary>
 		public void commitTransaction() {
 			commitTransaction(true);
 		}
 		
 		/// <summary>
-		/// Cancela todas las operaciones hechas bajo la transacción asociada a
-		/// un contexto de BD de tipo <c>SECTBitBaseDatosContext</c> que fue
-		/// construido con la función obtenContextoConTransaccion.
-		/// Este método cierra la conexión despues de revertir la transacción
+		/// Rollback the transaction associated with the ObjectContext obtained
+		/// with one of the getContextWithTransaction methods. This function
+		/// closes the connection after canceling the transaction
 		/// </summary>
 		public void rollbackTransaction() {
 			if (theConnection == null || theTransaction == null)

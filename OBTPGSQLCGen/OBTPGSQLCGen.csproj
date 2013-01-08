@@ -52,9 +52,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DBSQLUtils\OBTDBSQLUtils.csproj">
+    <ProjectReference Include="..\DBSQLUtils\OBTUtils.Data.csproj">
       <Project>{DAEE2802-8B55-4331-9326-1ADFC94E1A47}</Project>
-      <Name>OBTDBSQLUtils</Name>
+      <Name>OBTUtils.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\OBTUtilerias\OBTUtils.csproj">
       <Project>{AF957518-F233-458B-B495-B72B3BAAA548}</Project>

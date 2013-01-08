@@ -11,6 +11,7 @@ using System.Data.Common;
 using System.Data.Sql;
 
 using OBTUtils.Messaging;
+using OBTUtils.Data.ADO;
 
 
 
@@ -22,49 +23,32 @@ namespace OBTUtils.Data.SQL
 	/// </summary>
 	/// 
 	/// <remarks>\author Rodolfo Conde</remarks>
-	public class GenericSQLGenerator
+	public class GenericSQLGenerator : MessengerClass
 	{
-		/// <summary>
-		/// ADO.Net Provider factory
-		/// </summary>
-		private DbProviderFactory factory;
-		
-		/// <summary>
-		/// Connection to the database server
-		/// </summary>
-		private DbConnection connection;
-		
+		private ADOManager bdmanager;
 		
 		/// <summary>
 		/// Represents a SQL code generator
 		/// </summary>
 		protected delegate string SQLCodeGenerator(DataTable theTable);
 		
-		/// <summary>
-		/// For debugging purposes
-		/// </summary>
-		protected MessengersBoss dbgboss;
-		
 		
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		protected GenericSQLGenerator(DbProviderFactory fact, 
-		                               string BDconnectionString)
+		protected GenericSQLGenerator(DbProviderFactory fact,
+		                              string BDconnectionString)
 		{
-			dbgboss = new MessengersBoss();
-			
-			factory = fact;
-			
-			connection =  factory.CreateConnection();
-			connection.ConnectionString = BDconnectionString;
+			bdmanager = new ADOManager(fact, BDconnectionString);
 		}
 		
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public GenericSQLGenerator(DbProviderFactory fact) : 
-			this(fact, String.Empty) { }
+		public GenericSQLGenerator(DbProviderFactory fact) :
+		{
+			bdmanager = new ADOManager(fact);
+		}
 		
 		
 		/// <summary>
@@ -72,14 +56,8 @@ namespace OBTUtils.Data.SQL
 		/// </summary>
 		~GenericSQLGenerator()
 		{
-			factory = null;
-
-			if (connection.State == ConnectionState.Open)
-				connection.Close();
-			
-			connection = null;
-			
-			dbgboss = null;
+			bdmanager.Dispose();
+			bdmanager = null;
 		}
 		
 		
@@ -117,9 +95,9 @@ namespace OBTUtils.Data.SQL
 			else if (tipoColumna.Equals(typeof(DateTime)))
 				retVal = "DATETIME";
 			else {
-				dbgboss.sendDebugMessage("obtenTipoSQL: " +
-				                    "Tipo de dato no manejado: {0}",
-				                    tipoColumna);
+				Boss.sendDebugMessage("obtenTipoSQL: " +
+				                      "Tipo de dato no manejado: {0}",
+				                      tipoColumna);
 				retVal = String.Format("UNKNOWNTYPE{0}", tipoColumna);
 			}
 			
@@ -136,7 +114,7 @@ namespace OBTUtils.Data.SQL
 		{
 //			dbgboss.sendDebugMessage("Connection string is: {0}",
 //			                    connection.ConnectionString);
-//			
+//
 //			dbgboss.sendDebugMessage("Connecting to DB...");
 			connection.Open();
 //			dbgboss.sendDebugMessage("Connected !!!");
@@ -146,7 +124,8 @@ namespace OBTUtils.Data.SQL
 			DbDataAdapter adapter = factory.CreateDataAdapter();
 			
 			selectCmd = connection.CreateCommand();
-			selectCmd.CommandText = String.Format("SELECT * FROM {0} WHERE 1 <> 1", tableName);
+			selectCmd.CommandText = String.Format("SELECT * FROM {0} WHERE 1 <> 1",
+			                                      tableName);
 			selectCmd.CommandType = CommandType.Text;
 			
 			adapter.SelectCommand = selectCmd;

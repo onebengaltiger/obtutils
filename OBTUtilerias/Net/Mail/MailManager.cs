@@ -189,9 +189,9 @@ namespace OBTUtils.Net.Mail
 		/// Builds an attachment (an instance of the .Net Attachment class)
 		/// with the contents of the stream contents
 		/// </summary>
-		/// <param name="nombre">The attachment's name</param>
-		/// <param name="contenido">The attachment's contents</param>
-		/// <param name="tipoContenido">Attachment's MIME type
+		/// <param name="attname">The attachment's name</param>
+		/// <param name="contents">The attachment's contents</param>
+		/// <param name="contentstype">Attachment's MIME type
 		/// (i.e. .pdf, .txt, .jpg, etc)</param>
 		/// <returns>An object of type attachment with the information given
 		/// in the arguments</returns>

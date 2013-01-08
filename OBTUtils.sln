@@ -10,7 +10,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBTPGSQLCGen", "OBTPGSQLCGe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBSQLUtilsConsoleTests", "DBSQLUtilsConsoleTests\DBSQLUtilsConsoleTests.csproj", "{60BB7448-2D12-42AF-B996-6BD7A5FC6575}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBTDBSQLUtils", "DBSQLUtils\OBTDBSQLUtils.csproj", "{DAEE2802-8B55-4331-9326-1ADFC94E1A47}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBTUtils.Data", "DBSQLUtils\OBTUtils.Data.csproj", "{DAEE2802-8B55-4331-9326-1ADFC94E1A47}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBTSQLServerCGen", "OBTSQLServerCGen\OBTSQLServerCGen.csproj", "{C63B7E01-5254-4F81-872A-9F02509FE5E5}"
 EndProject
@@ -27,7 +27,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{20EEC6AC-9E7F-49AF-9CB4-6981E5A11635}"
 	ProjectSection(SolutionItems) = postProject
 		Doxyfile = Doxyfile
-		Lista de deseos.txt = Lista de deseos.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBTUtils.Enterprise", "OBTUtils.Enterprise\OBTUtils.Enterprise.csproj", "{7373219C-70A8-4A0A-8105-5673590AC271}"
