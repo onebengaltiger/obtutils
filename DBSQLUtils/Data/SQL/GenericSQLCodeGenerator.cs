@@ -14,6 +14,7 @@ using System.Data.Common;
 using System.Data.Sql;
 
 using OBTUtils.Messaging;
+using OBTUtils.Data;
 using OBTUtils.Data.ADO;
 
 
@@ -24,6 +25,8 @@ namespace OBTUtils.Data.SQL
 	/// Basic class to implement SQL code generator for
 	/// different DBMS.
 	/// </summary>
+	/// 
+	/// <remarks>\author Rodolfo Conde</remarks>
 	public class GenericSQLCodeGenerator : GenericDB2CodeGenerator
 	{
 		/// <summary>

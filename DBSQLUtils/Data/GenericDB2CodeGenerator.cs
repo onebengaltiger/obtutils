@@ -15,11 +15,11 @@ using OBTUtils.Data.ADO;
 
 
 
-namespace OBTUtils.Data.SQL
+namespace OBTUtils.Data
 {
 	/// <summary>
-	/// Basic class to implement SQL code generator for
-	/// different DBMS.
+	/// Basic class to implement a code generator for
+	/// different DBMS of SQL databases.
 	/// </summary>
 	/// 
 	/// <remarks>\author Rodolfo Conde</remarks>

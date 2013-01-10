@@ -40,23 +40,23 @@ namespace OBTUtils.Data.ADO
 //		protected int timeoutCommandExecution_ms = 10 * 1000;
 		
 		
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="afactory">The ADO.Net factory object</param>
-		/// <param name="server">Server address</param>
-		/// <param name="dbname">Database's name</param>
-		/// <param name="username">User name for the database</param>
-		/// <param name="passwd">Password of the user</param>
-		/// <param name="messengers">Optional messengers' array</param>
-		public ADOManager(DbProviderFactory afactory,
-		                  string server, string dbname,
-		                  string username, string passwd,
-		                  params IMessenger []messengers)
-			: this(afactory, messengers)
-		{
-			initConnection(server, dbname, username, passwd);
-		}
+//		/// <summary>
+//		/// Constructor
+//		/// </summary>
+//		/// <param name="afactory">The ADO.Net factory object</param>
+//		/// <param name="server">Server address</param>
+//		/// <param name="dbname">Database's name</param>
+//		/// <param name="username">User name for the database</param>
+//		/// <param name="passwd">Password of the user</param>
+//		/// <param name="messengers">Optional messengers' array</param>
+//		public ADOManager(DbProviderFactory afactory,
+//		                  string server, string dbname,
+//		                  string username, string passwd,
+//		                  params IMessenger []messengers)
+//			: this(afactory, messengers)
+//		{
+//			initConnection(server, dbname, username, passwd);
+//		}
 		
 		/// <summary>
 		/// Constructor
@@ -99,26 +99,26 @@ namespace OBTUtils.Data.ADO
 		}
 		
 		
-		/// <summary>
-		/// Prepare the database connection using the given parameters
-		/// </summary>
-		/// <param name="server">Server's address</param>
-		/// <param name="database">Database's name</param>
-		/// <param name="username">The user name</param>
-		/// <param name="passwd">User's password</param>
-		public void initConnection(string server, string database,
-		                           string username, string passwd) {
-			DbConnectionStringBuilder csbuilder
-				= dbFactory.CreateConnectionStringBuilder();
-			
-			csbuilder.Add("server", server);
-			csbuilder.Add("user id", username);
-			csbuilder.Add("password", passwd);
-			csbuilder.Add("Initial catalog", database);
-			
-			theconnection = dbFactory.CreateConnection();
-			theconnection.ConnectionString = csbuilder.ConnectionString;
-		}
+//		/// <summary>
+//		/// Prepare the database connection using the given parameters
+//		/// </summary>
+//		/// <param name="server">Server's address</param>
+//		/// <param name="database">Database's name</param>
+//		/// <param name="username">The user name</param>
+//		/// <param name="passwd">User's password</param>
+//		public void initConnection(string server, string database,
+//		                           string username, string passwd) {
+//			DbConnectionStringBuilder csbuilder
+//				= dbFactory.CreateConnectionStringBuilder();
+//
+//			csbuilder.Add("server", server);
+//			csbuilder.Add("user id", username);
+//			csbuilder.Add("password", passwd);
+//			csbuilder.Add("Initial catalog", database);
+//
+//			theconnection = dbFactory.CreateConnection();
+//			theconnection.ConnectionString = csbuilder.ConnectionString;
+//		}
 		
 		/// <summary>
 		/// Prepare the database connection using the given connection string
@@ -130,6 +130,17 @@ namespace OBTUtils.Data.ADO
 			theconnection.ConnectionString = connectionstring;
 		}
 		
+		/// <summary>
+		/// Builds a new command object using the connection managed by this object
+		/// </summary>
+		/// <param name="cmdtype">Command type</param>
+		/// <param name="commandtext">Text associated to the command</param>
+		/// <param name="cmdtimeout">Timeout for command execution</param>
+		/// <param name="parameters">An array of object, of even length. Each pair of
+		/// objects in the array is mean to be a (name, value) pair used to
+		/// build a parameter of the command</param>
+		/// <returns>A database command in the ADO.Net framework, accordingly
+		/// to the given values</returns>
 		public DbCommand getCommand(CommandType cmdtype, string commandtext,
 		                            int cmdtimeout, params object []parameters) {
 			if (theconnection != null) {
@@ -162,6 +173,27 @@ namespace OBTUtils.Data.ADO
 				                           "Impossible to build a command object !!");
 		}
 		
+		/// <summary>
+		/// Builds a new command object using the connection managed by this object
+		/// </summary>
+		/// <param name="cmdtype">Command type</param>
+		/// <param name="commandtext">Text associated to the command</param>
+		/// <param name="parameters">An array of object, of even length. Each pair of
+		/// objects in the array is mean to be a (name, value) pair used to
+		/// build a parameter of the command</param>
+		/// <returns>A database command in the ADO.Net framework, accordingly
+		/// to the given values</returns>
+		public DbCommand getCommand(CommandType cmdtype, string commandtext,
+		                            params object []parameters) {
+			return getCommand(cmdtype, commandtext, 0, parameters);
+		}
+		
+		/// <summary>
+		/// Builds a new DbDataAdapter object using the connection
+		/// managed by this object
+		/// </summary>
+		/// <returns>A new DbDataAdapter object using the connection
+		/// managed by this object</returns>
 		public DbDataAdapter getAdapter() {
 			if (theconnection != null)
 				return dbFactory.CreateDataAdapter();
@@ -178,10 +210,10 @@ namespace OBTUtils.Data.ADO
 //			get {
 //				return timeoutCommandExecution_ms / 1000;
 //			}
-//			
+//
 //			set {
 //				if (value < 0) value = -value;
-//				
+//
 //				timeoutCommandExecution_ms = value * 1000;
 //			}
 //		}
