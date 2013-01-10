@@ -20,7 +20,7 @@ namespace OBTUtils.Data.SQL
 	/// </summary>
 	/// 
 	/// <remarks>\author Rodolfo Conde</remarks>
-	public class MySQLSQLGenerator : GenericDB2CodeGenerator
+	public class MySQLSQLGenerator : GenericSQLCodeGenerator
 	{
 		/// <summary>
 		/// Constructor

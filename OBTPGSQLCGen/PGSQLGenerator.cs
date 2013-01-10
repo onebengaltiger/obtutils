@@ -18,7 +18,7 @@ namespace OBTUtils.Data.SQL
 	/// </summary>
 	/// 
 	/// <remarks>\author Rodolfo Conde</remarks>
-	public class PGSQLGenerator : GenericDB2CodeGenerator
+	public class PGSQLGenerator : GenericSQLCodeGenerator
 	{
 		/// <summary>
 		/// Constructor
@@ -300,9 +300,9 @@ namespace OBTUtils.Data.SQL
 			else if (tipoColumna.Equals(typeof(DateTime)))
 				retVal = "DATE";
 			else {
-				dbgboss.sendDebugMessage("obtenTipoSQL: " +
-				                    "Tipo de dato no manejado: {0}",
-				                    tipoColumna);
+				Boss.sendDebugMessage("obtenTipoSQL: " +
+				                      "Tipo de dato no manejado: {0}",
+				                      tipoColumna);
 				retVal = String.Format("UNKNOWNTYPE{0}", tipoColumna);
 			}
 			

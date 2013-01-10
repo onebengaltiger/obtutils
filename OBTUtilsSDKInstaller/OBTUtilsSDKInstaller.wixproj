@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{E4F38237-7E05-4FC5-B7C3-891BDDAE194E}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>Package</OutputType>
+    <RootNamespace>OBTUtilsSDKInstaller</RootNamespace>
+    <OutputName>OBTUtilsSDKInstaller</OutputName>
+    <WixToolPath Condition=" '$(WixToolPath)' == '' ">$(SharpDevelopBinPath)\Tools\Wix</WixToolPath>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(WixToolPath)\wix.targets</WixTargetsPath>
+    <WixTasksPath Condition=" '$(WixTasksPath)' == '' ">$(WixToolPath)\WixTasks.dll</WixTasksPath>
+    <SupressIces>ICE45</SupressIces>
+    <WixVariables>WixUILicenseRtf=license.rtf</WixVariables>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+  <ItemGroup>
+    <WixExtension Include="$(WixToolPath)\WixUIExtension.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Files.wxs" />
+    <Compile Include="Setup.wxs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="license.rtf" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DBSQLUtils\OBTUtils.Data.csproj">
+      <Project>{DAEE2802-8B55-4331-9326-1ADFC94E1A47}</Project>
+      <Name>OBTUtils.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OBTUtilerias\OBTUtils.csproj">
+      <Project>{AF957518-F233-458B-B495-B72B3BAAA548}</Project>
+      <Name>OBTUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OBTUtils.Enterprise\OBTUtils.Enterprise.csproj">
+      <Project>{7373219C-70A8-4A0A-8105-5673590AC271}</Project>
+      <Name>OBTUtils.Enterprise</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(WixToolPath)\wix.targets" />
+</Project>

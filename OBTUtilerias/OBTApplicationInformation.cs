@@ -27,7 +27,7 @@ namespace OBTUtils
 		/// <summary>
 		/// App's long name
 		/// </summary>
-		public const string appLongName = "OBTUtils";
+		public const string appLongName = "OBTUtils SDK";
 		
 		/// <summary>
 		/// App's description
@@ -37,7 +37,7 @@ namespace OBTUtils
 		/// <summary>
 		/// App's global version
 		/// </summary>
-		public const string appVersion = "3.2.0";
+		public const string appVersion = "4.0.0";
 		
 		/// <summary>
 		/// Group or person responsible for the

@@ -80,6 +80,7 @@
     <Compile Include="Generic\GenericCompoundResult.cs" />
     <Compile Include="IncrementalSeeker.cs" />
     <Compile Include="Messaging\FileMessenger.cs" />
+    <Compile Include="Messaging\StreamMessenger.cs" />
     <Compile Include="OBTApplicationInformation.cs" />
     <Compile Include="Messaging\ConsoleMessenger.cs" />
     <Compile Include="Messaging\ComponentMessengers.cs" />
