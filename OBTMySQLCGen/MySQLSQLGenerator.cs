@@ -20,7 +20,7 @@ namespace OBTUtils.Data.SQL
 	/// </summary>
 	/// 
 	/// <remarks>\author Rodolfo Conde</remarks>
-	public class MySQLSQLGenerator : GenericSQLGenerator
+	public class MySQLSQLGenerator : GenericDB2CodeGenerator
 	{
 		/// <summary>
 		/// Constructor
@@ -50,7 +50,7 @@ namespace OBTUtils.Data.SQL
 			for (int i = 0; i < table.Columns.Count; ++i) {
 				DataColumn col = table.Columns[i];
 				sbuilder.AppendFormat("IN P_{0} {1}", col.ColumnName,
-				                      obtenTipoSQL(col));
+				                      getSQLType(col));
 				
 				if (i < table.Columns.Count - 1)
 					sbuilder.AppendLine(",");
@@ -103,7 +103,7 @@ namespace OBTUtils.Data.SQL
 			for(int i = 0; i < table.Columns.Count; ++i) {
 				DataColumn col = table.Columns[i];
 				sbuilder.AppendFormat("IN P_{0} {1}", col.ColumnName,
-				                      obtenTipoSQL(col));
+				                      getSQLType(col));
 				
 				if (i < table.Columns.Count - 1)
 					sbuilder.AppendLine(",");
@@ -158,7 +158,7 @@ namespace OBTUtils.Data.SQL
 			for(int i = 0; i < table.Columns.Count; ++i) {
 				DataColumn col = table.Columns[i];
 				sbuilder.AppendFormat("IN P_{0} {1}", col.ColumnName,
-				                      obtenTipoSQL(col));
+				                      getSQLType(col));
 				
 				if (i < table.Columns.Count - 1)
 					sbuilder.AppendLine(",");
@@ -211,7 +211,7 @@ namespace OBTUtils.Data.SQL
 			for(int i = 0; i < table.Columns.Count; ++i) {
 				DataColumn col = table.Columns[i];
 				sbuilder.AppendFormat("IN P_{0} {1}", col.ColumnName,
-				                      obtenTipoSQL(col));
+				                      getSQLType(col));
 				
 				if (i < table.Columns.Count - 1)
 					sbuilder.AppendLine(",");

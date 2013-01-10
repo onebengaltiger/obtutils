@@ -18,7 +18,7 @@ namespace OBTUtils.Data.SQL
 	/// </summary>
 	/// 
 	/// <remarks>\author Rodolfo Conde</remarks>
-	public class SQLServerSQLGenerator : GenericSQLGenerator
+	public class SQLServerSQLGenerator : GenericDB2CodeGenerator
 	{
 		/// <summary>
 		/// Constructor

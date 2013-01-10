@@ -1,7 +1,10 @@
 ﻿/***************************************************************************
- *   Copyright (C) 2011-2013 by Rodolfo Conde Martinez                     *
+ *   Copyright (C) 2013 by Rodolfo Conde Martínez                          *
  *   rcm@gmx.co.uk                                                         *
+ *                                                                         *
+ *   This is property of Compumed, Corp.                                   *
  ***************************************************************************/
+
 
 
 using System;
@@ -21,144 +24,70 @@ namespace OBTUtils.Data.SQL
 	/// Basic class to implement SQL code generator for
 	/// different DBMS.
 	/// </summary>
-	/// 
-	/// <remarks>\author Rodolfo Conde</remarks>
-	public class GenericSQLGenerator : MessengerClass
+	public class GenericSQLCodeGenerator : GenericDB2CodeGenerator
 	{
-		private ADOManager bdmanager;
-		
 		/// <summary>
-		/// Represents a SQL code generator
+		/// Constructor
 		/// </summary>
-		protected delegate string SQLCodeGenerator(DataTable theTable);
-		
+		/// <param name="fact">The ADO.Net factory object</param>
+		/// <param name="BDconnectionString">Full connection string for the database
+		/// connection</param>
+		protected GenericSQLCodeGenerator(DbProviderFactory fact,
+		                                  string BDconnectionString)
+			: base(fact, BDconnectionString)
+		{ }
 		
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		protected GenericSQLGenerator(DbProviderFactory fact,
-		                              string BDconnectionString)
-		{
-			bdmanager = new ADOManager(fact, BDconnectionString);
-		}
-		
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		public GenericSQLGenerator(DbProviderFactory fact) :
-		{
-			bdmanager = new ADOManager(fact);
-		}
-		
-		
-		/// <summary>
-		/// Destructor
-		/// </summary>
-		~GenericSQLGenerator()
-		{
-			bdmanager.Dispose();
-			bdmanager = null;
-		}
+		/// <param name="fact">The ADO.Net factory object</param>
+		public GenericSQLCodeGenerator(DbProviderFactory fact)
+			: base(fact)
+		{ }
 		
 		
 		/// <summary>
 		/// Get the SQL datatype associated with the table column
 		///  (by examining the .Net datatype)
 		/// </summary>
-		/// <param name="columna">A DataColumn</param>
+		/// <param name="column">A DataColumn</param>
 		/// <returns>The SQL datatype associated with the column. If the function
 		/// cannot find any suitable SQL datatype, the type returned will contain the
 		///  substring UNKNOWNTYPE togheter with the original .Net datatype
 		/// of the column</returns>
-		protected virtual string obtenTipoSQL(DataColumn columna) {
-			Type tipoColumna = columna.DataType;
+		protected virtual string getSQLType(DataColumn column) {
+			Type columntype = column.DataType;
 			string retVal = "VARCHAR(255)";
 			
-			if (tipoColumna.Equals(typeof(byte)))
+			if (columntype.Equals(typeof(byte)))
 				retVal = "TINYINT";
-			else if (tipoColumna.Equals(typeof(sbyte)))
+			else if (columntype.Equals(typeof(sbyte)))
 				retVal = "SMALLINT";
-			else if (tipoColumna.Equals(typeof(short)))
+			else if (columntype.Equals(typeof(short)))
 				retVal = "SMALLINT";
-			else if (tipoColumna.Equals(typeof(Int32)))
+			else if (columntype.Equals(typeof(Int32)))
 				retVal = "INTEGER";
-			else if (tipoColumna.Equals(typeof(Single))) // float
+			else if (columntype.Equals(typeof(Single))) // float
 				retVal = "FLOAT(24)";
-			else if (tipoColumna.Equals(typeof(Double)))
+			else if (columntype.Equals(typeof(Double)))
 				retVal = "FLOAT(53)";
-			else if (tipoColumna.Equals(typeof(Boolean)))
+			else if (columntype.Equals(typeof(Boolean)))
 				retVal = "BIT";
-			else if (tipoColumna.Equals(typeof(Decimal)))
+			else if (columntype.Equals(typeof(Decimal)))
 				retVal = "DECIMAL";
-			else if (tipoColumna.Equals(typeof(String)))
+			else if (columntype.Equals(typeof(String)))
 				retVal = "VARCHAR(255)";
-			else if (tipoColumna.Equals(typeof(DateTime)))
+			else if (columntype.Equals(typeof(DateTime)))
 				retVal = "DATETIME";
 			else {
-				Boss.sendDebugMessage("obtenTipoSQL: " +
-				                      "Tipo de dato no manejado: {0}",
-				                      tipoColumna);
-				retVal = String.Format("UNKNOWNTYPE{0}", tipoColumna);
+				Boss.sendDebugMessage("getSQLType: " +
+				                      "Unknown data type: {0}",
+				                      columntype);
+				retVal = String.Format("UNKNOWNTYPE{0}", columntype);
 			}
 			
 			return retVal;
 		}
-		
-		/// <summary>
-		/// Obtains the basic scheme and metadata information of the
-		///  table named <c>tableName</c>
-		/// </summary>
-		/// <param name="tableName">The name of the table</param>
-		/// <returns>A DataTable with the desired information</returns>
-		protected DataTable getTableMetaDataFromBD(string tableName)
-		{
-//			dbgboss.sendDebugMessage("Connection string is: {0}",
-//			                    connection.ConnectionString);
-//
-//			dbgboss.sendDebugMessage("Connecting to DB...");
-			connection.Open();
-//			dbgboss.sendDebugMessage("Connected !!!");
-			
-			DbCommand selectCmd;
-			DataSet ds = new DataSet();
-			DbDataAdapter adapter = factory.CreateDataAdapter();
-			
-			selectCmd = connection.CreateCommand();
-			selectCmd.CommandText = String.Format("SELECT * FROM {0} WHERE 1 <> 1",
-			                                      tableName);
-			selectCmd.CommandType = CommandType.Text;
-			
-			adapter.SelectCommand = selectCmd;
-			
-			adapter.Fill(ds, 0, 1, tableName);
-			
-			DataTable table = ds.Tables[tableName];
-			
-//			if (table.Rows.Count <= 1)
-//				dbgboss.sendDebugMessage("It worked !!!");
-			
-			connection.Close();
-			
-			return table;
-		}
-		
-		/// <summary>
-		/// Generates SQL code for the table <c>tableName</c> using the SQL code generator
-		///  <c>sqlgenerator</c>
-		/// </summary>
-		/// <param name="tableName">The name of the table</param>
-		/// <param name="sqlgenerator">SQL code generator</param>
-		/// <returns>A string that contains the generated SQL code for the table
-		/// <c>tableName</c></returns>
-		private string generateSQLCode(string tableName, SQLCodeGenerator sqlgenerator)
-		{
-			DataTable theTable;
-			
-			theTable = getTableMetaDataFromBD(tableName);
-			
-			return sqlgenerator(theTable);
-		}
-		
 		
 		#region Basic SQL code generating functions
 		
@@ -169,7 +98,7 @@ namespace OBTUtils.Data.SQL
 		/// <returns>A SELECT statement for the table <c>tableName</c></returns>
 		public string generateSelect(string tableName)
 		{
-			return generateSQLCode(tableName, selectGenerator);
+			return generateCode(tableName, selectGenerator);
 		}
 		
 		/// <summary>
@@ -179,7 +108,7 @@ namespace OBTUtils.Data.SQL
 		/// <returns>A UPDATE statement for the table <c>tableName</c></returns>
 		public string generateUpdate(string tableName)
 		{
-			return generateSQLCode(tableName, updateGenerator);
+			return generateCode(tableName, updateGenerator);
 		}
 		
 		/// <summary>
@@ -189,7 +118,7 @@ namespace OBTUtils.Data.SQL
 		/// <returns>A INSERT statement for the table <c>tableName</c></returns>
 		public string generateInsert(string tableName)
 		{
-			return generateSQLCode(tableName, insertGenerator);
+			return generateCode(tableName, insertGenerator);
 		}
 		
 		/// <summary>
@@ -199,25 +128,10 @@ namespace OBTUtils.Data.SQL
 		/// <returns>A DELETE statement for the table <c>tableName</c></returns>
 		public string generateDelete(string tableName)
 		{
-			return generateSQLCode(tableName, deleteGenerator);
+			return generateCode(tableName, deleteGenerator);
 		}
 		
 		#endregion
-		
-		
-		/// <summary>
-		/// Gets or sets the DB connection string
-		/// </summary>
-		public string ConnectionString {
-			get {
-				return connection.ConnectionString;
-			}
-			
-			set {
-				connection.ConnectionString = value;
-			}
-		}
-		
 		
 		#region Basic SQL Generators
 		
@@ -235,7 +149,7 @@ namespace OBTUtils.Data.SQL
 			for(int i = 0; i < table.Columns.Count; ++i) {
 				DataColumn col = table.Columns[i];
 				sbuilder.AppendFormat("@{0} AS {1}", col.ColumnName,
-				                      obtenTipoSQL(col));
+				                      getSQLType(col));
 				
 				if (i < table.Columns.Count - 1)
 					sbuilder.AppendLine(",");
@@ -288,7 +202,7 @@ namespace OBTUtils.Data.SQL
 			for(int i = 0; i < table.Columns.Count; ++i) {
 				DataColumn col = table.Columns[i];
 				sbuilder.AppendFormat("@{0} AS {1}", col.ColumnName,
-				                      obtenTipoSQL(col));
+				                      getSQLType(col));
 				
 				if (i < table.Columns.Count - 1)
 					sbuilder.AppendLine(",");
@@ -343,7 +257,7 @@ namespace OBTUtils.Data.SQL
 			for(int i = 0; i < table.Columns.Count; ++i) {
 				DataColumn col = table.Columns[i];
 				sbuilder.AppendFormat("@{0} AS {1}", col.ColumnName,
-				                      obtenTipoSQL(col));
+				                      getSQLType(col));
 				
 				if (i < table.Columns.Count - 1)
 					sbuilder.AppendLine(",");
@@ -396,7 +310,7 @@ namespace OBTUtils.Data.SQL
 			for(int i = 0; i < table.Columns.Count; ++i) {
 				DataColumn col = table.Columns[i];
 				sbuilder.AppendFormat("@{0} AS {1}", col.ColumnName,
-				                      obtenTipoSQL(col));
+				                      getSQLType(col));
 				
 				if (i < table.Columns.Count - 1)
 					sbuilder.AppendLine(",");

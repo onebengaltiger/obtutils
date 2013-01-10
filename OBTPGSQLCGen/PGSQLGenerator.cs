@@ -18,7 +18,7 @@ namespace OBTUtils.Data.SQL
 	/// </summary>
 	/// 
 	/// <remarks>\author Rodolfo Conde</remarks>
-	public class PGSQLGenerator : GenericSQLGenerator
+	public class PGSQLGenerator : GenericDB2CodeGenerator
 	{
 		/// <summary>
 		/// Constructor
@@ -48,7 +48,7 @@ namespace OBTUtils.Data.SQL
 			for (int i = 0; i < table.Columns.Count; ++i) {
 				DataColumn col = table.Columns[i];
 				sbuilder.AppendFormat("OUT {0} {1}", col.ColumnName,
-				                      obtenTipoSQL(col));
+				                      getSQLType(col));
 				
 //				if (i < table.Columns.Count - 1)
 				sbuilder.AppendLine(",");
@@ -57,7 +57,7 @@ namespace OBTUtils.Data.SQL
 			for (int i = 0; i < table.Columns.Count; ++i) {
 				DataColumn col = table.Columns[i];
 				sbuilder.AppendFormat("P_{0} {1}", col.ColumnName,
-				                      obtenTipoSQL(col));
+				                      getSQLType(col));
 				
 				if (i < table.Columns.Count - 1)
 					sbuilder.AppendLine(",");
@@ -115,7 +115,7 @@ namespace OBTUtils.Data.SQL
 			for(int i = 0; i < table.Columns.Count; ++i) {
 				DataColumn col = table.Columns[i];
 				sbuilder.AppendFormat("P_{0} {1}", col.ColumnName,
-				                      obtenTipoSQL(col));
+				                      getSQLType(col));
 				
 				if (i < table.Columns.Count - 1)
 					sbuilder.AppendLine(",");
@@ -174,7 +174,7 @@ namespace OBTUtils.Data.SQL
 			for(int i = 0; i < table.Columns.Count; ++i) {
 				DataColumn col = table.Columns[i];
 				sbuilder.AppendFormat("P_{0} {1}", col.ColumnName,
-				                      obtenTipoSQL(col));
+				                      getSQLType(col));
 				
 				if (i < table.Columns.Count - 1)
 					sbuilder.AppendLine(",");
@@ -232,7 +232,7 @@ namespace OBTUtils.Data.SQL
 			for(int i = 0; i < table.Columns.Count; ++i) {
 				DataColumn col = table.Columns[i];
 				sbuilder.AppendFormat("P_{0} {1}", col.ColumnName,
-				                      obtenTipoSQL(col));
+				                      getSQLType(col));
 				
 				if (i < table.Columns.Count - 1)
 					sbuilder.AppendLine(",");
@@ -275,7 +275,7 @@ namespace OBTUtils.Data.SQL
 		/// cannot find any suitable SQL datatype, the type returned will contain the
 		///  substring UNKNOWNTYPE togheter with the original .Net datatype
 		/// of the column</returns>
-		protected override string obtenTipoSQL(DataColumn columna) {
+		protected override string getSQLType(DataColumn columna) {
 			Type tipoColumna = columna.DataType;
 			string retVal = "VARCHAR(255)";
 			

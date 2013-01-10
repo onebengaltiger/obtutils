@@ -65,7 +65,8 @@
   <ItemGroup>
     <Compile Include="Data\ADO\ADOManager.cs" />
     <Compile Include="Data\EDM\EntityTransactionManager.cs" />
-    <Compile Include="Data\SQL\Generic_SQLGenerator.cs" />
+    <Compile Include="Data\SQL\GenericDB2CodeGenerator.cs" />
+    <Compile Include="Data\SQL\GenericSQLCodeGenerator.cs" />
     <Compile Include="OBTDataException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

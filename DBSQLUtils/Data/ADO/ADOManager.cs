@@ -34,10 +34,10 @@ namespace OBTUtils.Data.ADO
 		/// </summary>
 		protected DbConnection theconnection;
 		
-		/// <summary>
-		/// The maximum waiting time for the execution of a command
-		/// </summary>
-		protected int timeoutCommandExecution_ms = 10 * 1000;
+//		/// <summary>
+//		/// The maximum waiting time for the execution of a command
+//		/// </summary>
+//		protected int timeoutCommandExecution_ms = 10 * 1000;
 		
 		
 		/// <summary>
@@ -89,7 +89,8 @@ namespace OBTUtils.Data.ADO
 		/// Destructor
 		/// </summary>
 		~ADOManager() {
-			if (theconnection != null && theconnection.State == ConnectionState.Open) {
+			if (theconnection != null
+			    && theconnection.State == ConnectionState.Open) {
 				theconnection.Close();
 			}
 			
@@ -129,19 +130,68 @@ namespace OBTUtils.Data.ADO
 			theconnection.ConnectionString = connectionstring;
 		}
 		
+		public DbCommand getCommand(CommandType cmdtype, string commandtext,
+		                            int cmdtimeout, params object []parameters) {
+			if (theconnection != null) {
+				DbCommand acommand = theconnection.CreateCommand();
+				
+				acommand.CommandType = cmdtype;
+				acommand.CommandText = commandtext;
+				acommand.CommandTimeout = cmdtimeout;
+				
+				if (parameters.Length % 2 != 0)
+					throw new ArgumentException(
+						String.Format("The number of arguments for the " +
+						              "paramters of the command is invalid: {0}",
+						              parameters.Length)
+					);
+				else {
+					for (int i = 0; i < parameters.Length; i += 2) {
+						DbParameter aparameter = acommand.CreateParameter();
+						
+						aparameter.ParameterName = parameters[i].ToString();
+						aparameter.Value = parameters[i + 1];
+						
+						acommand.Parameters.Add(aparameter);
+					}
+				}
+				
+				return acommand;
+			} else
+				throw new OBTDataException("This manager does not have a connection. " +
+				                           "Impossible to build a command object !!");
+		}
+		
+		public DbDataAdapter getAdapter() {
+			if (theconnection != null)
+				return dbFactory.CreateDataAdapter();
+			else
+				throw new OBTDataException("This manager does not have a connection. " +
+				                           "Impossible to build an adapter object !!");
+		}
+		
+		
+//		/// <summary>
+//		/// Gets or sets the maximum waiting time for the execution of a command
+//		/// </summary>
+//		public int TimeoutCommandExecution {
+//			get {
+//				return timeoutCommandExecution_ms / 1000;
+//			}
+//			
+//			set {
+//				if (value < 0) value = -value;
+//				
+//				timeoutCommandExecution_ms = value * 1000;
+//			}
+//		}
 		
 		/// <summary>
-		/// Gets or sets the maximum waiting time for the execution of a command
+		/// Gets the connection object managed by this object
 		/// </summary>
-		public int TimeoutCommandExecution {
+		public DbConnection Theconnection {
 			get {
-				return timeoutCommandExecution_ms / 1000;
-			}
-			
-			set {
-				if (value < 0) value = -value;
-				
-				timeoutCommandExecution_ms = value * 1000;
+				return theconnection;
 			}
 		}
 	}
