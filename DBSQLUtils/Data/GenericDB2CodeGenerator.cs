@@ -97,20 +97,20 @@ namespace OBTUtils.Data
 		}
 		
 		/// <summary>
-		/// Generates SQL code for the table <c>tableName</c> using the SQL code generator
-		///  <c>sqlgenerator</c>
+		/// Generates code in some language for the table <c>tableName</c> 
+		/// using the code generator <c>thecodegenerator</c>
 		/// </summary>
 		/// <param name="tableName">The name of the table</param>
-		/// <param name="sqlgenerator">SQL code generator</param>
-		/// <returns>A string that contains the generated SQL code for the table
+		/// <param name="thecodegenerator">A code generator (for some language)</param>
+		/// <returns>A string that contains the generated code for the table
 		/// <c>tableName</c></returns>
-		protected string generateCode(string tableName, CodeGenerator sqlgenerator)
+		protected string generateCode(string tableName, CodeGenerator thecodegenerator)
 		{
 			DataTable theTable;
 			
 			theTable = getTableMetaDataFromBD(tableName);
 			
-			return sqlgenerator(theTable);
+			return thecodegenerator(theTable);
 		}
 		
 				
