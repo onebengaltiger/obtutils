@@ -1,3 +1,6 @@
 ﻿
-Agregar clase para manejar informacion general de una aplicacion.
+Add class or Attribute to manage an application's general information
+
+Add a GUI based SQL code generator
+
 
