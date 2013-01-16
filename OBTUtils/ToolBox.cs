@@ -67,11 +67,11 @@ namespace OBTUtils
 		/// the array of bytes
 		/// </summary>
 		/// <param name="buffer">An array of bytes</param>
-		/// <param name="initialposition">The initial position in the array from which 
+		/// <param name="initialposition">The initial position in the array from which
 		/// the string will be build</param>
-		/// <param name="length">This parameter says how many bytes to copy into the 
+		/// <param name="length">This parameter says how many bytes to copy into the
 		/// returned string</param>
-		/// <returns>A string representation, in hexadecimal format, of a portion of 
+		/// <returns>A string representation, in hexadecimal format, of a portion of
 		/// the array of bytes</returns>
 		public static string byteArray2String(byte []buffer,
 		                                      int initialposition, int length) {
@@ -79,26 +79,26 @@ namespace OBTUtils
 		}
 		
 		/// <summary>
-		/// Builds a string representation (in hex format) of 
+		/// Builds a string representation (in hex format) of
 		/// the array of bytes
 		/// </summary>
 		/// <param name="buffer">An array of bytes</param>
-		/// <returns>A string representation, in hexadecimal format, of a portion of 
+		/// <returns>A string representation, in hexadecimal format, of a portion of
 		/// the array of bytes</returns>
 		public static string byteArray2String(byte []buffer) {
 			return byteArray2String(buffer, 0, buffer.Length);
 		}
 		
 		/// <summary>
-		/// Builds a char array representation (with characters in hex format) 
+		/// Builds a char array representation (with characters in hex format)
 		/// of a portion of the array of bytes
 		/// </summary>
 		/// <param name="buffer">An array of bytes</param>
-		/// <param name="initialposition">The initial position in the array from which 
+		/// <param name="initialposition">The initial position in the array from which
 		/// the string will be build</param>
-		/// <param name="length">This parameter says how many bytes to copy into the 
+		/// <param name="length">This parameter says how many bytes to copy into the
 		/// returned string</param>
-		/// <returns>A character arrya representation, with characters in hexadecimal 
+		/// <returns>A character arrya representation, with characters in hexadecimal
 		/// format, of a portion of the array of bytes</returns>
 		public static char[] byteArray2charArray(byte []buffer,
 		                                         int initialposition, int length) {
@@ -112,11 +112,11 @@ namespace OBTUtils
 		}
 		
 		/// <summary>
-		/// Builds a char array representation (with characters in hex format) 
+		/// Builds a char array representation (with characters in hex format)
 		/// of a portion of the array of bytes
 		/// </summary>
 		/// <param name="buffer">An array of bytes</param>
-		/// <returns>A character array representation, with characters in hexadecimal 
+		/// <returns>A character array representation, with characters in hexadecimal
 		/// format, of a portion of the array of bytes</returns>
 		public static char[] byteArray2charArray(byte []buffer) {
 			return byteArray2charArray(buffer, 0, buffer.Length);
@@ -124,15 +124,15 @@ namespace OBTUtils
 		
 		
 		/// <summary>
-		/// Builds a StringBuilder containing a buffer of chars representing 
+		/// Builds a StringBuilder containing a buffer of chars representing
 		/// (with characters in hex format) a portion of the array of bytes
 		/// </summary>
 		/// <param name="buffer">An array of bytes</param>
-		/// <param name="initialposition">The initial position in the array from which 
+		/// <param name="initialposition">The initial position in the array from which
 		/// the string will be build</param>
-		/// <param name="length">This parameter says how many bytes to copy into the 
+		/// <param name="length">This parameter says how many bytes to copy into the
 		/// returned string</param>
-		/// <returns>A StringBuilder object representation, with characters in hexadecimal 
+		/// <returns>A StringBuilder object representation, with characters in hexadecimal
 		/// format, of a portion of the array of bytes</returns>
 		private static StringBuilder byteArray2StringBuilder(byte []arreglo,
 		                                                     int principio, int cuantos) {
@@ -256,14 +256,15 @@ namespace OBTUtils
 		/// to use</param>
 		/// <param name="title">A title for the message containing the objects of
 		/// the collection theobjects</param>
-		/// <param name="usethismessenger">An index for the messenger's boss theboss, which
-		///  is used to choose which messenger to use</param>
+		/// <param name="usethismessenger">An index for the messenger's boss theboss,
+		/// which is used to choose which messenger to use</param>
 		public static void dumpObjects(IEnumerator theobjects,
 		                               MessengersBoss theboss,
 		                               string title, int usethismessenger) {
 			StringBuilder builder = new StringBuilder();
 			object anobject;
 			bool movenext;
+			int previousmessenger;
 			
 			theobjects.Reset();
 			movenext = theobjects.MoveNext();
@@ -275,7 +276,39 @@ namespace OBTUtils
 				                      ? ", " : String.Empty));
 			}
 			
-			theboss.Messengers[usethismessenger].sendMessage(title, builder.ToString());
+			previousmessenger = theboss.TheMainMessenger;
+			theboss.TheMainMessenger = usethismessenger;
+			
+			theboss.sendMessage(title, builder.ToString());
+			
+			theboss.TheMainMessenger = previousmessenger;
+		}
+		
+		/// <summary>
+		/// Print all the elements of the collection theobjects,
+		/// using the main messenger of the object theboss
+		/// </summary>
+		/// <param name="theobjects">A collection of objects</param>
+		/// <param name="theboss">The IMessenger's boss that contains the messengers
+		/// to use</param>
+		/// <param name="title">A title for the message containing the objects of
+		/// the collection theobjects</param>
+		public static void dumpObjects(IEnumerator theobjects,
+		                               MessengersBoss theboss,
+		                               string title) {
+			dumpObjects(theobjects, theboss, title, theboss.TheMainMessenger);
+		}
+		
+		/// <summary>
+		/// Print all the elements of the collection theobjects,
+		/// using the main messenger of the object theboss
+		/// </summary>
+		/// <param name="theobjects">A collection of objects</param>
+		/// <param name="theboss">The IMessenger's boss that contains the messengers
+		/// to use</param>
+		public static void dumpObjects(IEnumerator theobjects,
+		                               MessengersBoss theboss) {
+			dumpObjects(theobjects, theboss, String.Empty);
 		}
 		
 		/// <summary>
@@ -287,11 +320,10 @@ namespace OBTUtils
 		/// to use</param>
 		/// <param name="title">A title for the message containing the objects of
 		/// the collection theobjects</param>
-		public static void dumpObjects(IEnumerator theobjects,
-		                               MessengersBoss theboss,
-		                               string title) {
+		public static void dumpObjectsBroadcast(IEnumerator theobjects,
+		                                        MessengersBoss theboss,
+		                                        string title) {
 			StringBuilder builder = new StringBuilder();
-			object anobject;
 			bool movenext;
 			
 			theobjects.Reset();
@@ -329,9 +361,9 @@ namespace OBTUtils
 		/// <param name="theobjects">A collection of objects</param>
 		/// <param name="theboss">The IMessenger's boss that contains the messengers
 		/// to use</param>
-		public static void dumpObjects(IEnumerator theobjects,
-		                               MessengersBoss theboss) {
-			dumpObjects(theobjects, theboss, String.Empty);
+		public static void dumpObjectsBroadcast(IEnumerator theobjects,
+		                                        MessengersBoss theboss) {
+			dumpObjectsBroadcast(theobjects, theboss, String.Empty);
 		}
 		
 		/// <summary>
@@ -360,10 +392,10 @@ namespace OBTUtils
 		/// to use</param>
 		/// <param name="title">A title for the message containing the objects of
 		/// the collection theobjects</param>
-		public static void dumpObjects(ICollection theobjects,
-		                               MessengersBoss theboss,
-		                               string title) {
-			dumpObjects(theobjects, theboss, title);
+		public static void dumpObjectsBroadcast(ICollection theobjects,
+		                                        MessengersBoss theboss,
+		                                        string title) {
+			dumpObjectsBroadcast(theobjects, theboss, title);
 		}
 		
 		/// <summary>
@@ -388,9 +420,9 @@ namespace OBTUtils
 		/// <param name="theobjects">A collection of objects</param>
 		/// <param name="theboss">The IMessenger's boss that contains the messengers
 		/// to use</param>
-		public static void dumpObjects(ICollection theobjects,
-		                               MessengersBoss theboss) {
-			dumpObjects(theobjects, theboss, String.Empty);
+		public static void dumpObjectsBroadcast(ICollection theobjects,
+		                                        MessengersBoss theboss) {
+			dumpObjectsBroadcast(theobjects, theboss, String.Empty);
 		}
 	}
 }
