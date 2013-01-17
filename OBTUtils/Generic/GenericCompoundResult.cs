@@ -67,7 +67,7 @@ namespace OBTUtils.Generic
 		/// while the operation was being performed</param>
 		/// <param name="errorcode">Indicates an error code, dependent on the application
 		/// using this class</param>
-		public GenericCompoundResult(bool wassucceful, string details, TInfo information,
+		public GenericCompoundResult(bool wassucceful, object details, TInfo information,
 		                             Exception error, TStatus errorcode)
 		{
 			__wasSuccessful = wassucceful;
@@ -88,7 +88,7 @@ namespace OBTUtils.Generic
 		/// of the executed operation</param>
 		/// <param name="error">Indicates exactly what kind of error happened
 		/// while the operation was being performed</param>
-		public GenericCompoundResult(bool wassucceful, string details,
+		public GenericCompoundResult(bool wassucceful, object details,
 		                             TInfo information, Exception error)
 			: this(wassucceful, details, information, error, default(TStatus))
 		{ }
@@ -102,7 +102,7 @@ namespace OBTUtils.Generic
 		/// the executed operation</param>
 		/// <param name="information">Contain some extra result
 		/// of the executed operation</param>
-		public GenericCompoundResult(bool wassucceful, string details,
+		public GenericCompoundResult(bool wassucceful, object details,
 		                             TInfo information) :
 			this(wassucceful, details, information, null)
 		{ }
@@ -140,7 +140,7 @@ namespace OBTUtils.Generic
 		/// <summary>
 		/// Gets a string representation of this object
 		/// </summary>
-		/// <returns>A representing the instance</returns>
+		/// <returns>A string representing the instance</returns>
 		public override string ToString()
 		{
 			return string.Format("[Operation succeded={0}, AdditionalDetails={1}, " +
