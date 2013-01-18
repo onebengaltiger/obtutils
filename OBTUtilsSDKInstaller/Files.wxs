@@ -44,6 +44,11 @@
 						      Name="OBTMultSQLCodeGen.exe"
 						      Source="..\Database\OBTMultSQLCodeGen\$(var.BasicBuildDir)\OBTMultSQLCodeGen.exe"
 						      KeyPath="yes" />
+						
+						<Environment Id="PATH" Name="PATH"
+						             Value="[INSTALLDIR]" Permanent="no"
+						             Part="last" Action="set"
+						             System="yes" />
 					</Component>
 					
 					<Component Id="OBTUtilsEnterpriseComp"
