@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="BAC53AB8-56DF-480D-B492-354DEA327D4E"
+	<Product Id="*"
 	         Name="OBT SDK"
 	         Language="1034"
 	         Codepage="1252"
