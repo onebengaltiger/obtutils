@@ -3,4 +3,4 @@ Add class or Attribute to manage an application's general information
 
 Add a GUI based SQL code generator
 
-
+Add support to ToolBox.dumpObjects to manage nested collections (in particular, IDictionary)

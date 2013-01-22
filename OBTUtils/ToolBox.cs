@@ -211,7 +211,7 @@ namespace OBTUtils
 		/// </summary>
 		/// <param name="theobjects">A collection of objects</param>
 		public static void dumpObjects(IEnumerator theobjects,
-		                               StringBuilder strbuilder) {
+		                               StringBuilder strbuilder) {			
 			object anobject;
 			bool movenext;
 			
@@ -219,8 +219,15 @@ namespace OBTUtils
 			movenext = theobjects.MoveNext();
 			
 			while (movenext) {
+				anobject = theobjects.Current;
+				
+				if (anobject is ICollection || anobject is ICollection<object>)
+					anobject = dumpObjects((ICollection) anobject);
+				else if (anobject is IEnumerator || anobject is IEnumerator<object>)
+					anobject = dumpObjects((IEnumerator) anobject);
+				
 				strbuilder.AppendFormat("{0}{1}",
-				                        theobjects.Current,
+				                        anobject,
 				                        ((movenext = theobjects.MoveNext()) == true
 				                         ? ", " : String.Empty));
 			}
@@ -262,19 +269,20 @@ namespace OBTUtils
 		                               MessengersBoss theboss,
 		                               string title, int usethismessenger) {
 			StringBuilder builder = new StringBuilder();
-			object anobject;
-			bool movenext;
+//			object anobject;
+//			bool movenext;
 			int previousmessenger;
-			
-			theobjects.Reset();
-			movenext = theobjects.MoveNext();
-			
-			while (movenext) {
-				builder.AppendFormat("{0}{1}",
-				                     theobjects.Current,
-				                     ((movenext = theobjects.MoveNext()) == true
-				                      ? ", " : String.Empty));
-			}
+//			
+//			theobjects.Reset();
+//			movenext = theobjects.MoveNext();
+//			
+//			while (movenext) {
+//				builder.AppendFormat("{0}{1}",
+//				                     theobjects.Current,
+//				                     ((movenext = theobjects.MoveNext()) == true
+//				                      ? ", " : String.Empty));
+//			}
+			dumpObjects(theobjects, builder);
 			
 			previousmessenger = theboss.TheMainMessenger;
 			theboss.TheMainMessenger = usethismessenger;
@@ -324,17 +332,18 @@ namespace OBTUtils
 		                                        MessengersBoss theboss,
 		                                        string title) {
 			StringBuilder builder = new StringBuilder();
-			bool movenext;
-			
-			theobjects.Reset();
-			movenext = theobjects.MoveNext();
-			
-			while (movenext) {
-				builder.AppendFormat("{0}{1}",
-				                     theobjects.Current,
-				                     ((movenext = theobjects.MoveNext()) == true
-				                      ? ", " : String.Empty));
-			}
+//			bool movenext;
+//			
+//			theobjects.Reset();
+//			movenext = theobjects.MoveNext();
+//			
+//			while (movenext) {
+//				builder.AppendFormat("{0}{1}",
+//				                     theobjects.Current,
+//				                     ((movenext = theobjects.MoveNext()) == true
+//				                      ? ", " : String.Empty));
+//			}
+			dumpObjects(theobjects, builder);
 			
 			theboss.broadcastMessage(title, builder.ToString());
 		}
