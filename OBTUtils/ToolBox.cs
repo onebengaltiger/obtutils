@@ -210,8 +210,9 @@ namespace OBTUtils
 		/// of the collection theobjects
 		/// </summary>
 		/// <param name="theobjects">A collection of objects</param>
+		/// <param name="strbuilder">A string builder to write the result</param>
 		public static void dumpObjects(IEnumerator theobjects,
-		                               StringBuilder strbuilder) {			
+		                               StringBuilder strbuilder) {
 			object anobject;
 			bool movenext;
 			
@@ -241,7 +242,7 @@ namespace OBTUtils
 		/// <returns>A string that contains the list of all the objects given
 		/// in the collection theobjects</returns>
 		public static string dumpObjects(ICollection theobjects) {
-			return dumpObjects(theobjects);
+			return dumpObjects(theobjects.GetEnumerator());
 		}
 		
 		/// <summary>
@@ -251,7 +252,7 @@ namespace OBTUtils
 		/// <param name="theobjects">A collection of objects</param>
 		public static void dumpObjects(ICollection theobjects,
 		                               StringBuilder strbuilder) {
-			dumpObjects(theobjects, strbuilder);
+			dumpObjects(theobjects.GetEnumerator(), strbuilder);
 		}
 		
 		/// <summary>
@@ -272,10 +273,10 @@ namespace OBTUtils
 //			object anobject;
 //			bool movenext;
 			int previousmessenger;
-//			
+//
 //			theobjects.Reset();
 //			movenext = theobjects.MoveNext();
-//			
+//
 //			while (movenext) {
 //				builder.AppendFormat("{0}{1}",
 //				                     theobjects.Current,
@@ -333,10 +334,10 @@ namespace OBTUtils
 		                                        string title) {
 			StringBuilder builder = new StringBuilder();
 //			bool movenext;
-//			
+//
 //			theobjects.Reset();
 //			movenext = theobjects.MoveNext();
-//			
+//
 //			while (movenext) {
 //				builder.AppendFormat("{0}{1}",
 //				                     theobjects.Current,
@@ -389,7 +390,8 @@ namespace OBTUtils
 		public static void dumpObjects(ICollection theobjects,
 		                               MessengersBoss theboss,
 		                               string title, int usethismessenger) {
-			dumpObjects(theobjects, theboss, title, usethismessenger);
+			dumpObjects(theobjects.GetEnumerator(), theboss,
+			            title, usethismessenger);
 		}
 		
 		/// <summary>
@@ -404,7 +406,7 @@ namespace OBTUtils
 		public static void dumpObjectsBroadcast(ICollection theobjects,
 		                                        MessengersBoss theboss,
 		                                        string title) {
-			dumpObjectsBroadcast(theobjects, theboss, title);
+			dumpObjectsBroadcast(theobjects.GetEnumerator(), theboss, title);
 		}
 		
 		/// <summary>
@@ -419,7 +421,8 @@ namespace OBTUtils
 		public static void dumpObjects(ICollection theobjects,
 		                               MessengersBoss theboss,
 		                               int usethismessenger) {
-			dumpObjects(theobjects, theboss, String.Empty, usethismessenger);
+			dumpObjects(theobjects.GetEnumerator(), theboss,
+			            String.Empty, usethismessenger);
 		}
 		
 		/// <summary>
@@ -431,7 +434,8 @@ namespace OBTUtils
 		/// to use</param>
 		public static void dumpObjectsBroadcast(ICollection theobjects,
 		                                        MessengersBoss theboss) {
-			dumpObjectsBroadcast(theobjects, theboss, String.Empty);
+			dumpObjectsBroadcast(theobjects.GetEnumerator(), theboss,
+			                     String.Empty);
 		}
 	}
 }
