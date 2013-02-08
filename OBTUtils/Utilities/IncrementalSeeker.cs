@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 
 
-namespace OBTUtils
+namespace OBTUtils.Utilities
 {
 	/// <summary>
 	/// Delegate type to execute the search

@@ -15,7 +15,7 @@ using OBTUtils.Messaging;
 
 
 
-namespace OBTUtils
+namespace OBTUtils.Utilities
 {
 	/// <summary>
 	/// Various utilities to be used in programs
