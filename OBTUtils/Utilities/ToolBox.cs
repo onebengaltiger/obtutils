@@ -288,7 +288,7 @@ namespace OBTUtils.Utilities
 			previousmessenger = theboss.TheMainMessenger;
 			theboss.TheMainMessenger = usethismessenger;
 			
-			theboss.sendMessage(title, builder.ToString());
+			theboss.sendTitleMessage(title, builder.ToString());
 			
 			theboss.TheMainMessenger = previousmessenger;
 		}
@@ -346,7 +346,7 @@ namespace OBTUtils.Utilities
 //			}
 			dumpObjects(theobjects, builder);
 			
-			theboss.broadcastMessage(title, builder.ToString());
+			theboss.broadcastTitleMessage(title, builder.ToString());
 		}
 		
 		/// <summary>

@@ -153,7 +153,7 @@ namespace OBTUtils.Net.Mail
 					smtpc.Send(msg);
 					break;
 				} catch (Exception ex) {
-					Boss.broadcastDebugMessage("Excepción al intentar mandar mensaje" +
+					Boss.broadcastTitleDebugMessage("Excepción al intentar mandar mensaje" +
 					                           " de correo:{0}{1}",
 					                           System.Environment.NewLine, ex);
 					

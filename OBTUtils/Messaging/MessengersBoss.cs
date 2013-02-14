@@ -51,8 +51,8 @@ namespace OBTUtils.Messaging
 		/// True to send debugging message to the output
 		/// devices; false otherwise
 		/// </summary>
-		/// <see cref="sendDebugMessage" />
-		/// <see cref="broadcastDebugMessage" />
+		/// <see cref="MessengersBoss.sendDebugMessage" />
+		/// <see cref="MessengersBoss.broadcastDebugMessage" />
 		private bool sendDebugging;
 		
 		
@@ -133,7 +133,7 @@ namespace OBTUtils.Messaging
 		/// <see cref="IMessenger.sendMessage" />
 		public void sendMessage(string format, params object []args)
 		{
-			sendMessage(String.Empty, format, args);
+			sendTitleMessage(String.Empty, format, args);
 		}
 		
 		/// <summary>
@@ -144,7 +144,7 @@ namespace OBTUtils.Messaging
 		/// <param name="args">arguments to be replaced inside
 		/// the format string</param>
 		/// <see cref="IMessenger.sendMessage" />
-		public void sendMessage(string title, string format, params object []args)
+		public void sendTitleMessage(string title, string format, params object []args)
 		{
 			if (messengers.Length > 0)
 				messengers[theMainMessenger].sendMessage(title, format, args);
@@ -160,7 +160,7 @@ namespace OBTUtils.Messaging
 		public void sendInformationMessage(string format,
 		                                   params object []args)
 		{
-			sendInformationMessage(String.Empty, format, args);
+			sendTitleInformationMessage(String.Empty, format, args);
 		}
 
 		/// <summary>
@@ -171,8 +171,8 @@ namespace OBTUtils.Messaging
 		/// <param name="args">arguments to be replaced inside
 		/// the format string</param>
 		/// <see cref="IMessenger.sendInformationMessage" />
-		public void sendInformationMessage(string title, string format,
-		                                   params object []args)
+		public void sendTitleInformationMessage(string title, string format,
+		                                        params object []args)
 		{
 			if (messengers.Length > 0)
 				messengers[theMainMessenger].sendInformationMessage(
@@ -189,7 +189,7 @@ namespace OBTUtils.Messaging
 		/// <see cref="IMessenger.sendWarningMessage" />
 		public void sendWarningMessage(string format, params object []args)
 		{
-			sendWarningMessage(String.Empty, format, args);
+			sendTitleWarningMessage(String.Empty, format, args);
 		}
 
 		/// <summary>
@@ -200,7 +200,9 @@ namespace OBTUtils.Messaging
 		/// <param name="args">arguments to be replaced inside
 		/// the format string</param>
 		/// <see cref="IMessenger.sendWarningMessage" />
-		public void sendWarningMessage(string title, string format, params object []args)
+		public void sendTitleWarningMessage(
+			string title, string format, params object []args
+		)
 		{
 			if (messengers.Length > 0)
 				messengers[theMainMessenger].sendWarningMessage(title, format, args);
@@ -215,7 +217,7 @@ namespace OBTUtils.Messaging
 		/// <see cref="IMessenger.sendErrorMessage" />
 		public void sendErrorMessage(string format, params object []args)
 		{
-			sendErrorMessage(String.Empty, format, args);
+			sendTitleErrorMessage(String.Empty, format, args);
 		}
 
 		/// <summary>
@@ -226,7 +228,9 @@ namespace OBTUtils.Messaging
 		/// <param name="args">arguments to be replaced inside
 		/// the format string</param>
 		/// <see cref="IMessenger.sendErrorMessage" />
-		public void sendErrorMessage(string title, string format, params object []args)
+		public void sendTitleErrorMessage(
+			string title, string format, params object []args
+		)
 		{
 			if (messengers.Length > 0)
 				messengers[theMainMessenger].sendErrorMessage(title, format, args);
@@ -241,7 +245,7 @@ namespace OBTUtils.Messaging
 		/// <see cref="IMessenger.sendMessage" />
 		public void broadcastMessage(string format, params object []args)
 		{
-			broadcastMessage(String.Empty, format, args);
+			broadcastTitleMessage(String.Empty, format, args);
 		}
 		
 		/// <summary>
@@ -252,8 +256,8 @@ namespace OBTUtils.Messaging
 		/// <param name="args">arguments to be replaced inside
 		/// the format string</param>
 		/// <see cref="IMessenger.sendMessage" />
-		public void broadcastMessage(string title, string format,
-		                             params object []args)
+		public void broadcastTitleMessage(string title, string format,
+		                                  params object []args)
 		{
 			foreach (IMessenger aMessenger in messengers)
 				aMessenger.sendMessage(title, format, args);
@@ -269,7 +273,7 @@ namespace OBTUtils.Messaging
 		public void broadcastInformationMessage(string format,
 		                                        params object []args)
 		{
-			broadcastInformationMessage(String.Empty, format, args);
+			broadcastTitleInformationMessage(String.Empty, format, args);
 		}
 
 		/// <summary>
@@ -280,8 +284,8 @@ namespace OBTUtils.Messaging
 		/// <param name="args">arguments to be replaced inside
 		/// the format string</param>
 		/// <see cref="IMessenger.sendInformationMessage" />
-		public void broadcastInformationMessage(string title, string format,
-		                                        params object []args)
+		public void broadcastTitleInformationMessage(string title, string format,
+		                                             params object []args)
 		{
 			foreach (IMessenger aMessenger in messengers)
 				aMessenger.sendInformationMessage(title, format, args);
@@ -297,7 +301,7 @@ namespace OBTUtils.Messaging
 		public void broadcastWarningMessage(string format,
 		                                    params object []args)
 		{
-			broadcastWarningMessage(String.Empty, format, args);
+			broadcastTitleWarningMessage(String.Empty, format, args);
 		}
 
 		/// <summary>
@@ -308,8 +312,8 @@ namespace OBTUtils.Messaging
 		/// <param name="args">arguments to be replaced inside
 		/// the format string</param>
 		/// <see cref="IMessenger.sendWarningMessage" />
-		public void broadcastWarningMessage(string title, string format,
-		                                    params object []args)
+		public void broadcastTitleWarningMessage(string title, string format,
+		                                         params object []args)
 		{
 			foreach (IMessenger aMessenger in messengers)
 				aMessenger.sendWarningMessage(title, format, args);
@@ -325,7 +329,7 @@ namespace OBTUtils.Messaging
 		public void broadcastErrorMessage(string format,
 		                                  params object []args)
 		{
-			broadcastErrorMessage(String.Empty, format, args);
+			broadcastTitleErrorMessage(String.Empty, format, args);
 		}
 
 		/// <summary>
@@ -336,8 +340,8 @@ namespace OBTUtils.Messaging
 		/// <param name="args">arguments to be replaced inside
 		/// the format string</param>
 		/// <see cref="IMessenger.sendErrorMessage" />
-		public void broadcastErrorMessage(string title, string format,
-		                                  params object []args)
+		public void broadcastTitleErrorMessage(string title, string format,
+		                                       params object []args)
 		{
 			foreach (IMessenger aMessenger in messengers)
 				aMessenger.sendErrorMessage(title, format, args);
@@ -386,10 +390,12 @@ namespace OBTUtils.Messaging
 		/// <param name="format">Formatting string</param>
 		/// <param name="args">arguments to be replaced inside
 		/// the format string</param>
-		public void sendDebugMessage(string title, string format, params object []args)
+		public void sendTitleDebugMessage(
+			string title, string format, params object []args
+		)
 		{
 			if (sendDebugging)
-				sendMessage(title, format, args);
+				sendTitleMessage(title, format, args);
 		}
 		
 		/// <summary>
@@ -411,8 +417,8 @@ namespace OBTUtils.Messaging
 		/// <param name="format">Formatting string</param>
 		/// <param name="args">arguments to be replaced inside
 		/// the format string</param>
-		public void broadcastDebugMessage(string title, string format,
-		                                  params object []args)
+		public void broadcastTitleDebugMessage(string title, string format,
+		                                       params object []args)
 		{
 			if (sendDebugging)
 				broadcastMessage(format, args);
