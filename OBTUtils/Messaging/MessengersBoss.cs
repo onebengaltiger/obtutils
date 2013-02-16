@@ -14,8 +14,7 @@ namespace OBTUtils.Messaging
 	/// The classes implementing IMessenger and this interface are not mean
 	/// to be used directly, instead you should add all your messengers
 	/// to an instance of this class, set your main messenger and use the methods
-	/// sendMessage and broadcastMessage. This class supports the DEBUG macro, so that
-	/// when this macro is not defined, no debugging output is generated.
+	/// sendXXXMessage and broadcastXXXMessage.
 	/// </summary>
 	/// 
 	/// <remarks>\author Rodolfo Conde</remarks>
@@ -422,6 +421,79 @@ namespace OBTUtils.Messaging
 		{
 			if (sendDebugging)
 				broadcastMessage(format, args);
+		}
+		
+		/// <summary>
+		/// Sends a debug message using the main messenger, and
+		/// then throws the given exception anexception
+		/// </summary>
+		/// <param name="anexception">An exception to be thrown after
+		/// the message is output</param>
+		/// <param name="format">Formatting string</param>
+		/// <param name="args">arguments to be replaced inside
+		/// the format string</param>
+		public void sendExceptionMessage(Exception anexception,
+		                                 string format, params object []args)
+		{
+			sendDebugMessage(format, args);
+			throw anexception;
+		}
+		
+		/// <summary>
+		/// Sends a debug message using the main messenger, and
+		/// then throws the given exception anexception
+		/// </summary>
+		/// <param name="anexception">An exception to be thrown after
+		/// the message is output</param>
+		/// <param name="title">Title for the message</param>
+		/// <param name="format">Formatting string</param>
+		/// <param name="args">arguments to be replaced inside
+		/// the format string</param>
+		public void sendTitleExceptionMessage(
+			Exception anexception,
+			string title, string format, params object []args
+		)
+		{
+			sendTitleDebugMessage(title, format, args);
+			throw anexception;
+		}
+		
+		/// <summary>
+		/// Broadcast a debug message using all the messengers, and
+		/// then throws the given exception anexception
+		/// </summary>
+		/// <param name="anexception">An exception to be thrown after
+		/// the message is output</param>
+		/// <param name="format">Formatting string</param>
+		/// <param name="args">arguments to be replaced inside
+		/// the format string</param>
+		public void broadcastExceptionMessage(
+			Exception anexception,
+			string format, params object []args
+		)
+		{
+			broadcastDebugMessage(format, args);
+			throw anexception;
+		}
+		
+		/// <summary>
+		/// Broadcast a debug message using all the messengers, and
+		/// then throws the given exception anexception
+		/// </summary>
+		/// <param name="anexception">An exception to be thrown after
+		/// the message is output</param>
+		/// <param name="title">Title for the message</param>
+		/// <param name="format">Formatting string</param>
+		/// <param name="args">arguments to be replaced inside
+		/// the format string</param>
+		public void broadcastTitleDebugMessage(
+			Exception anexception,
+			string title, string format,
+			params object []args
+		)
+		{
+			broadcastTitleDebugMessage(title, format, args);
+			throw anexception;
 		}
 	}
 }
