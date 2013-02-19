@@ -31,6 +31,13 @@ namespace OBTUtils.Messaging
 		/// </summary>
 		private StreamWriter streamwriter;
 		
+		/// <summary>
+		/// Stores a value indicating if a new line
+		/// should be written to the stream each time
+		/// a message is send
+		/// </summary>
+		private bool automaticnewline;
+		
 		
 		/// <summary>
 		/// Constructor
@@ -38,22 +45,31 @@ namespace OBTUtils.Messaging
 		/// <param name="thestream">The stream associated with this messenger</param>
 		/// <param name="theencoding">Encoding used to write the messages
 		/// in the stream</param>
-		public StreamMessenger(Stream thestream, Encoding theencoding)
+		/// <param name="automaticnewline">Contains a value indicating if a new line
+		/// should be written to the stream each time
+		/// a message is send</param>
+		public StreamMessenger(Stream thestream, Encoding theencoding,
+		                       bool automaticnewline)
 		{
 			mystream = thestream;
 			streamwriter = new StreamWriter(mystream, theencoding);
 			streamwriter.AutoFlush = true;
-		}				
+			
+			this.automaticnewline = automaticnewline;
+		}
 		
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="thestream">The stream associated with this messenger</param>
+		/// <param name="automaticnewline">Contains a value indicating if a new line
+		/// should be written to the stream each time
+		/// a message is send</param>
 		/// <remarks>With this constructor, the system's default encoding is used to write
 		///  the data and this is appended
 		/// in the stream</remarks>
-		public StreamMessenger(Stream thestream)
-			: this(thestream, Encoding.Default)
+		public StreamMessenger(Stream thestream, bool automaticnewline)
+			: this(thestream, Encoding.Default, automaticnewline)
 		{ }
 		
 		
@@ -61,7 +77,8 @@ namespace OBTUtils.Messaging
 		/// Destructor
 		/// </summary>
 		~StreamMessenger() {
-			streamwriter.Dispose();
+			if (streamwriter != null)
+				streamwriter.Close();
 			
 			streamwriter = null;
 			mystream = null;
@@ -90,7 +107,10 @@ namespace OBTUtils.Messaging
 			
 			strbuilder.AppendFormat(format, args);
 			
-			streamwriter.Write(strbuilder.ToString());
+			if (automaticnewline)
+				streamwriter.WriteLine(strbuilder.ToString());
+			else
+				streamwriter.Write(strbuilder.ToString());
 		}
 		
 		
