@@ -18,6 +18,9 @@
 						<File Id="OBTUtilsTagsFile"
 						      Name="OBTUtilsSDK.tag"
 						      Source="..\docs\OBTUtilsSDK.tag"/>
+						<File Id="OBTUtilsREADMEFile"
+						      Name="README.txt"
+						      Source="..\docs\README.txt"/>
 					</Component>
 					
 					<Component Id="OBTUtilsComp"

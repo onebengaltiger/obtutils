@@ -23,6 +23,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{20EEC6AC-9E7F-49AF-9CB4-6981E5A11635}"
 	ProjectSection(SolutionItems) = postProject
 		Doxyfile = Doxyfile
+		docs\README.txt = docs\README.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Enterprise", "Enterprise", "{6BEC30B1-54F3-4D29-BD6B-EAB6BBFFBF27}"
