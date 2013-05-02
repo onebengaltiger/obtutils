@@ -1,0 +1,84 @@
+﻿<?xml version="1.0"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*"
+	         Name="OBT SDK"
+	         Language="1034"
+	         Codepage="1252"
+	         Version="$(var.OBTVersion)"
+	         UpgradeCode="4396A199-8A3C-4079-BB72-1F275843FF52"
+	         Manufacturer="OBT (Rodolfo Conde)">
+		<Package Description="OBT SDK utilities for programs"
+		         Comments="Many utilities for programs written in .Net languages"
+		         InstallerVersion="200"
+		         Compressed="yes" SummaryCodepage="1252" />
+		
+		<Condition Message="Usted no es el administrador de este equipo. No puede instalar este software">
+		Privileged
+		</Condition>
+		<Condition Message="Este programa sólo se  puede instalar en Windows 2000 o mas nuevo">
+		NOT Version9X AND NOT VersionNT = 400
+		</Condition>
+		<Condition Message="No tiene instalado .NET Framework 4.0 o mas reciente. La instalación no puede seguir">
+			<![CDATA[MsiNetAssemblySupport >= "4"]]>
+		</Condition>
+		
+		<!--
+			Source media for the installation. 
+ 			Specifies a single cab file to be embedded in the installer's .msi. 
+		-->
+		<Media Id="1" Cabinet="contents.cab" EmbedCab="yes" CompressionLevel="high"/>
+		
+		<!-- Installation directory and files are defined in Files.wxs -->
+		<Directory Id="TARGETDIR" Name="SourceDir"/>
+		
+		<Feature Id="FRCompleteOBT"
+		         Title="OBT Framework SDK"
+		         Description="The complete OBT SDK"
+		         Level="1"
+		         ConfigurableDirectory="INSTALLDIR"
+		         InstallDefault="local">
+			<Feature Id="FRBasicOBT"
+			         Title="Basic SDK library and documentation"
+			         Description="The most basic utilities of the OBT SDK"
+			         Level="1" InstallDefault="followParent">
+				<ComponentRef Id="LicenseFileComp" />
+				
+				<ComponentRef Id="DocumentationComp" />
+				
+				<ComponentRef Id="OBTUtilsComp" />
+			</Feature>
+			
+			<Feature Id="FRDBEnterpriseOBT"
+			         Title="Database and enterprise SDK libraries"
+			         Description="Utilities of the OBT SDK for database and enterprise-class applications"
+			         Level="1000" Absent="allow" Display="expand" AllowAdvertise="no"
+			         InstallDefault="followParent">
+				<ComponentRef Id="OBTUtilsDataComp" />
+				
+				<ComponentRef Id="OBTMultSQLCodeGenEXEComp" />
+				
+				<ComponentRef Id="OBTUtilsEnterpriseComp" />
+			</Feature>
+		</Feature>
+		
+		<!--
+			Using the Wix UI library
+ 
+			WixUI_Mondo includes the full set of dialogs:
+ 			
+			welcome
+			license agreement
+			setup type (typical, custom, and complete)
+			feature customization
+			directory browse
+			disk cost. 
+
+			Maintenance-mode dialogs are also included. 
+
+			Use WixUI_Mondo when you have some of your product's features 
+			are not installed by default and there is a meaningful 
+			difference between typical and complete installs
+		-->
+		<UIRef Id="WixUI_Mondo"/>
+	</Product>
+</Wix>
