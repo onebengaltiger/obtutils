@@ -31,13 +31,13 @@ namespace OBTUtils.Net.Mail
 		/// <summary>
 		/// Maximum waiting time to complete the operations by the smtp client
 		/// </summary>
-		private int timeoutSMTPClient = 300;  // 5 minutes
+		private int timeoutSMTPClient = 180;  // 3 minutes
 		
 		/// <summary>
 		/// Maximum numbers of times for trying to send mails in the method
 		/// sendMail
 		/// </summary>
-		private byte ntryTosendMails = 2;
+		private byte ntryTosendMails = 1;
 		
 		
 		/// <summary>
@@ -120,7 +120,7 @@ namespace OBTUtils.Net.Mail
 		/// <param name="subject">Email's subject</param>
 		/// <param name="body">Email's contents</param>
 		/// <param name="attatchments">All the attachments of the email</param>
-		private void sendMail(string username, SecureString password,
+		public void sendMail(string username, SecureString password,
 		                      string smtpserver,
 		                      MailAddress fromAddress, ICollection<MailAddress> tosAddresses,
 		                      string subject, string body,
@@ -176,7 +176,7 @@ namespace OBTUtils.Net.Mail
 		/// <param name="tosAddresses">The address which will reveive the email</param>
 		/// <param name="subject">Email's subject</param>
 		/// <param name="body">Email's contents</param>
-		private void sendMail(string username, SecureString password,
+		public void sendMail(string username, SecureString password,
 		                      string smtpserver,
 		                      MailAddress fromAddress, MailAddress toAddress,
 		                      string subject, string body) {

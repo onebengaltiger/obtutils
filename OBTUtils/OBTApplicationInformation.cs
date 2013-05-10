@@ -35,7 +35,7 @@ namespace OBTUtils
 		/// <summary>
 		/// App's global version
 		/// </summary>
-		public const string appVersion = "4.0.0";
+		public const string appVersion = "4.0.1";
 		
 		/// <summary>
 		/// Group or person responsible for the
