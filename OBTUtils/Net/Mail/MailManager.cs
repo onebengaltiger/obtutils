@@ -115,16 +115,20 @@ namespace OBTUtils.Net.Mail
 		/// <param name="username">Name of the <c>fromAddress</c>'s name</param>
 		/// <param name="password">Password of <c>fromAddress</c>'s account</param>
 		/// <param name="smtpserver">Domain name or IP address of the SMTP server</param>
+		/// <param name="serverport">SMTP Server's port</param>
+		/// <param name="withssl">Enable or diable SSL when sending the email</param>
 		/// <param name="fromAddress">The address of the person who is sending the email</param>
 		/// <param name="tosAddresses">All the addresses which will reveive the email</param>
 		/// <param name="subject">Email's subject</param>
 		/// <param name="body">Email's contents</param>
 		/// <param name="attatchments">All the attachments of the email</param>
 		public void sendMail(string username, SecureString password,
-		                      string smtpserver,
-		                      MailAddress fromAddress, ICollection<MailAddress> tosAddresses,
-		                      string subject, string body,
-		                      IEnumerable<Attachment> attatchments) {
+		                     string smtpserver,
+		                     int serverport,
+		                     bool withssl,
+		                     MailAddress fromAddress, ICollection<MailAddress> tosAddresses,
+		                     string subject, string body,
+		                     IEnumerable<Attachment> attatchments) {
 			MailMessage msg = new MailMessage();
 			byte local_ntryToSendMails = ntryTosendMails;
 			
@@ -132,8 +136,7 @@ namespace OBTUtils.Net.Mail
 			if (tosAddresses != null && tosAddresses.Count != 0)
 				foreach (MailAddress ma in tosAddresses) msg.To.Add(ma);
 			else
-				throw new OBTException("No es posible mandar un correo " +
-				                       "sin alguna dirección destino !!!", "tos");
+				throw new OBTException("Impossible to send email without a recipient !!!");
 			
 			msg.Subject = subject;
 			msg.Body = body;
@@ -143,10 +146,11 @@ namespace OBTUtils.Net.Mail
 				foreach (Attachment a in attatchments)
 					msg.Attachments.Add(a);
 			
-			SmtpClient smtpc = new SmtpClient(smtpserver);
+			SmtpClient smtpc = new SmtpClient(smtpserver, serverport);
 			
 			smtpc.Credentials = new NetworkCredential(username, password);
 			smtpc.Timeout = timeoutSMTPClient * 1000;
+			smtpc.EnableSsl = withssl;
 			
 			while (local_ntryToSendMails-- > 0) {
 				try {
@@ -154,8 +158,8 @@ namespace OBTUtils.Net.Mail
 					break;
 				} catch (Exception ex) {
 					Boss.broadcastTitleDebugMessage("Excepción al intentar mandar mensaje" +
-					                           " de correo:{0}{1}",
-					                           System.Environment.NewLine, ex);
+					                                " de correo:{0}{1}",
+					                                System.Environment.NewLine, ex);
 					
 					if (local_ntryToSendMails <= 0)
 						throw ex;
@@ -163,7 +167,7 @@ namespace OBTUtils.Net.Mail
 //						smtpc.Timeout *= 2;
 				}
 			}
-		}
+		}		
 		
 		/// <summary>
 		/// Send an email from the address <c>fromAddress</c> to the given adresses in
@@ -172,15 +176,19 @@ namespace OBTUtils.Net.Mail
 		/// <param name="username">Name of the <c>fromAddress</c>'s name</param>
 		/// <param name="password">Password of <c>fromAddress</c>'s account</param>
 		/// <param name="smtpserver">Domain name or IP address of the SMTP server</param>
+		/// <param name="serverport">SMTP Server's port</param>
+		/// <param name="withssl">Enable or diable SSL when sending the email</param>
 		/// <param name="fromAddress">The address of the person who is sending the email</param>
 		/// <param name="tosAddresses">The address which will reveive the email</param>
 		/// <param name="subject">Email's subject</param>
 		/// <param name="body">Email's contents</param>
 		public void sendMail(string username, SecureString password,
-		                      string smtpserver,
-		                      MailAddress fromAddress, MailAddress toAddress,
-		                      string subject, string body) {
-			sendMail(username, password, smtpserver,
+		                     string smtpserver,
+		                     int serverport,
+		                     bool withssl,
+		                     MailAddress fromAddress, MailAddress toAddress,
+		                     string subject, string body) {
+			sendMail(username, password, smtpserver, serverport, withssl,
 			         fromAddress, new MailAddress [] { toAddress },
 			         subject, body,  (Attachment []) null);
 		}
