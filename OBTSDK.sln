@@ -32,6 +32,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBTUtils.Enterprise", "OBTU
 EndProject
 Project("{CFEE4113-1246-4D54-95CB-156813CB8593}") = "OBTSDKInstaller", "OBTSDKInstaller\OBTSDKInstaller.wixproj", "{95E4849F-BEB4-4B9C-BCDB-7D0389B48D2E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBTTests", "OBTTests\OBTTests.csproj", "{D9E50DA8-8D7E-4BFC-BD0C-AB3A90EA2BC7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -88,6 +90,14 @@ Global
 		{95E4849F-BEB4-4B9C-BCDB-7D0389B48D2E}.Release|x86.ActiveCfg = Release|Any CPU
 		{95E4849F-BEB4-4B9C-BCDB-7D0389B48D2E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{95E4849F-BEB4-4B9C-BCDB-7D0389B48D2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9E50DA8-8D7E-4BFC-BD0C-AB3A90EA2BC7}.Debug|x86.Build.0 = Debug|Any CPU
+		{D9E50DA8-8D7E-4BFC-BD0C-AB3A90EA2BC7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D9E50DA8-8D7E-4BFC-BD0C-AB3A90EA2BC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9E50DA8-8D7E-4BFC-BD0C-AB3A90EA2BC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9E50DA8-8D7E-4BFC-BD0C-AB3A90EA2BC7}.Release|x86.Build.0 = Release|Any CPU
+		{D9E50DA8-8D7E-4BFC-BD0C-AB3A90EA2BC7}.Release|x86.ActiveCfg = Release|Any CPU
+		{D9E50DA8-8D7E-4BFC-BD0C-AB3A90EA2BC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9E50DA8-8D7E-4BFC-BD0C-AB3A90EA2BC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DAEE2802-8B55-4331-9326-1ADFC94E1A47} = {D2EFF688-6750-44A1-98DB-85D45D9CEC97}

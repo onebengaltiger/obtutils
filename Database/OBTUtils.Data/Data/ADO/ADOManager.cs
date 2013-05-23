@@ -89,13 +89,16 @@ namespace OBTUtils.Data.ADO
 		/// Destructor
 		/// </summary>
 		~ADOManager() {
-			if (theconnection != null
-			    && theconnection.State == ConnectionState.Open) {
-				theconnection.Close();
-			}
+//			if (theconnection != null
+//			    && theconnection.State == ConnectionState.Open) {
+//				TheMessengersBoss.sendDebugMessage("Intentando cerrar conexión de BD");
+//				theconnection.Close();
+//				TheMessengersBoss.sendDebugMessage("Se cerro la conexión de BD");
+//			}
 			
 			theconnection = null;
 			dbFactory = null;
+//			TheMessengersBoss.sendDebugMessage("Variables asignadas a null");
 		}
 		
 		
