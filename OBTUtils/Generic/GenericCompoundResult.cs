@@ -143,9 +143,9 @@ namespace OBTUtils.Generic
 		/// <returns>A string representing the instance</returns>
 		public override string ToString()
 		{
-			return string.Format("[Operation succeded={0}, AdditionalDetails={1}, " +
+			return string.Format("[Operation succeded: {0}, Additional details: {1}, " +
 			                     "Result: {2}, Error code: {3}, " +
-			                     "ErrorInformation={4}]",
+			                     "Error information: {4}]",
 			                     __wasSuccessful,
 			                     __additionalDetails,
 			                     __moreInformation,

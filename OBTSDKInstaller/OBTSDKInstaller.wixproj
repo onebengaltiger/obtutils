@@ -41,6 +41,10 @@
     <None Include="license.rtf" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Database\OBTMultSQLCodeGen\OBTMultSQLCodeGen.csproj">
+      <Project>{F148B375-1B00-4661-A038-1B7AF2BC4AD0}</Project>
+      <Name>OBTMultSQLCodeGen</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Database\OBTUtils.Data\OBTUtils.Data.csproj">
       <Project>{DAEE2802-8B55-4331-9326-1ADFC94E1A47}</Project>
       <Name>OBTUtils.Data</Name>
