@@ -3,4 +3,6 @@ obj/
 html/
 doxy_warns.txt
 *.pdb
-
+java/nbproject/private/
+build/
+dist/
