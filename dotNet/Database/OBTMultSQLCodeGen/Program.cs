@@ -32,40 +32,40 @@ namespace OBTMultSQLCodeGen
 				try {
 					string providerinvariantname, connectionString,
 					tableName, sqlToGenerate, generatedCode;
-					MultipleSQLGenerator pgsqlgen;
+					MultipleSQLGenerator multsqlgen;
 					
 					providerinvariantname = args[0];
 					connectionString = args[1];
 					tableName = args[2];
 					sqlToGenerate = args[3];
 					
-					pgsqlgen = new MultipleSQLGenerator(
+					multsqlgen = new MultipleSQLGenerator(
 						providerinvariantname, connectionString
 					);
 					
 					switch (sqlToGenerate.ToLower()) {
 						case "select":
-							generatedCode = pgsqlgen.generateSelect(tableName);
+							generatedCode = multsqlgen.generateSelect(tableName);
 							break;
 						case "update":
-							generatedCode = pgsqlgen.generateUpdate(tableName);
+							generatedCode = multsqlgen.generateUpdate(tableName);
 							break;
 						case "insert":
-							generatedCode = pgsqlgen.generateInsert(tableName);
+							generatedCode = multsqlgen.generateInsert(tableName);
 							break;
 						case "delete":
-							generatedCode = pgsqlgen.generateDelete(tableName);
+							generatedCode = multsqlgen.generateDelete(tableName);
 							break;
 						case "all":
 							StringBuilder sbuilder = new StringBuilder();
 							
-							sbuilder.AppendLine(pgsqlgen.generateSelect(tableName));
+							sbuilder.AppendLine(multsqlgen.generateSelect(tableName));
 							sbuilder.AppendLine();
-							sbuilder.AppendLine(pgsqlgen.generateInsert(tableName));
+							sbuilder.AppendLine(multsqlgen.generateInsert(tableName));
 							sbuilder.AppendLine();
-							sbuilder.AppendLine(pgsqlgen.generateUpdate(tableName));
+							sbuilder.AppendLine(multsqlgen.generateUpdate(tableName));
 							sbuilder.AppendLine();
-							sbuilder.AppendLine(pgsqlgen.generateDelete(tableName));
+							sbuilder.AppendLine(multsqlgen.generateDelete(tableName));
 
 							generatedCode = sbuilder.ToString();
 							break;

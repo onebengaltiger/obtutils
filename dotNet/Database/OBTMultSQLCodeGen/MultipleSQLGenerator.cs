@@ -15,8 +15,23 @@ using System.Data.Common;
 namespace OBTUtils.Data.SQL
 {
 	/// <summary>
-	/// 
+	/// SQL code generator for multiple
+	/// DBMS. Currently, we support the following servers:
+	/// <list type="bullet">
+	/// 	<item>
+	/// 		<description>SQL Server</description>
+	/// 	</item>
+	/// 	<item>
+	/// 		<description>Postgre SQL Server</description>
+	/// 	</item>
+	/// 	<item>
+	/// 		<description>MySQL Server</description>
+	/// 	</item>
+	/// </list>
 	/// </summary>
+	/// <remarks>\author \rodolfo</remarks>
+	/// <remarks>A generic generator is provided that can be used to generate 
+	/// code suitable for non-supported DBMS</remarks>
 	public class MultipleSQLGenerator : GenericSQLCodeGenerator
 	{
 		/// <summary>
