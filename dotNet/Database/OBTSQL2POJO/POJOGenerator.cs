@@ -94,7 +94,7 @@ namespace OBTUtils.Data.Java
 			
 			if (entitysupport == JavaDBEntitiesManagers.ormlite) {
 				conscadena.AppendLine("import com.j256.ormlite.field.DatabaseField;");
-				conscadena.AppendLine("import com.j256.ormlite.field.DatabaseTable;");
+				conscadena.AppendLine("import com.j256.ormlite.table.DatabaseTable;");
 				
 				conscadena.AppendLine();
 				conscadena.AppendLine();
@@ -107,7 +107,7 @@ namespace OBTUtils.Data.Java
 			conscadena.AppendLine(" */");
 			
 			if (entitysupport == JavaDBEntitiesManagers.ormlite)
-				conscadena.AppendFormat("@Databasetable(tableName = \"{0}\")", thetable.TableName).AppendLine();
+				conscadena.AppendFormat("@DatabaseTable(tableName = \"{0}\")", thetable.TableName).AppendLine();
 			
 			conscadena.AppendFormat("public class {0} {{", thetable.TableName).AppendLine();
 			
@@ -173,7 +173,7 @@ namespace OBTUtils.Data.Java
 				conscadena.AppendLine("\t *");
 				conscadena.AppendLine("\t */");
 				conscadena.AppendFormat(
-					"\tpublic {0} set{1}({0} thevalue) {{",
+					"\tpublic void set{1}({0} thevalue) {{",
 					getJavaTypeForColumn(column),
 					propertyname
 				).AppendLine();
