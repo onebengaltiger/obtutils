@@ -214,6 +214,9 @@ namespace OBTUtils.Data.Java
 				case "Float":
 					returnvalue = "float";
 					break;
+				case "DateTime":
+					returnvalue = "Date";
+					break;
 				default:
 					returnvalue = dotnettype;
 					break;

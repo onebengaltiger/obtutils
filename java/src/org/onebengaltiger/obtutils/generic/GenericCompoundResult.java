@@ -18,12 +18,14 @@
 
 package org.onebengaltiger.obtutils.generic;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Rodolfo Conde
  * 
  */
-public class GenericCompoundResult<TStatus, TInfo> {
+public class GenericCompoundResult<TStatus, TInfo> implements Serializable {
     /// <summary>
     /// Indicates wether the executed operation
     /// was successful
