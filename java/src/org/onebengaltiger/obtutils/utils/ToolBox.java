@@ -28,6 +28,39 @@ public class ToolBox {
     private ToolBox() { }
     
     
+    public static char []byteArray2charArray(byte []buffer, int start, int length) {
+        return null;
+    }
+    
+    ///// http://stackoverflow.com/questions/9655181/convert-from-byte-array-to-hex-string-in-java
+    
+    /* Fast byte-array to hex char-array implementation */
+    
+    final private static char[] hexArray = "0123456789ABCDEF".toCharArray();
+    
+    private static char []bytesToHex(byte[] bytes, int start, int length) {
+        char[] hexChars = new char[length * 2];
+        for ( int j = start; j < length; j++ ) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = hexArray[v >>> 4];
+            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+        }
+        
+        return hexChars;
+    }   
+    
+    ///// http://stackoverflow.com/questions/9655181/convert-from-byte-array-to-hex-string-in-java    
+    
+    
+    public static char []bytes2Hexchars(byte []thebytes, int start, int length) {
+        return bytesToHex(thebytes, start, length);
+    }
+    
+    public static char []bytes2Hexchars(byte []thebytes) {
+        return bytesToHex(thebytes, 0, thebytes.length);
+    }
+    
+    
     public static class StringTools {
         public static final String Empty = "";
         
