@@ -36,7 +36,7 @@ public class ToolBox {
     
     /* Fast byte-array to hex char-array implementation */
     
-    final private static char[] hexArray = "0123456789ABCDEF".toCharArray();
+    final private static char[] hexArray = "0123456789abcdef".toCharArray();
     
     private static char []bytesToHex(byte[] bytes, int start, int length) {
         char[] hexChars = new char[length * 2];
