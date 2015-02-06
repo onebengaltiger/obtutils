@@ -7,8 +7,9 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>OBTMultSQLCodeGen</RootNamespace>
     <AssemblyName>OBTMultSQLCodeGen</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\OBTUtils.snk</AssemblyOriginatorKeyFile>
@@ -73,6 +74,9 @@
       <Project>{DAEE2802-8B55-4331-9326-1ADFC94E1A47}</Project>
       <Name>OBTUtils.Data</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>
