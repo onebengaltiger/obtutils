@@ -46,7 +46,7 @@ namespace OBTUtils
 		/// Constructor
 		/// </summary>
 		/// <param name="format">Format string</param>
-		/// <param name="args">arguments to be replaces inside the format
+		/// <param name="args">Arguments to be replaced inside the format
 		/// string</param>
 		public OBTException(string format, params object []args)
 			: base(String.Format(format, args))
@@ -59,7 +59,7 @@ namespace OBTUtils
 		/// <param name="format">Format string</param>
 		/// <param name="innerException">Some exception that ocurred before
 		/// this exception</param>
-		/// <param name="args">arguments to be replaces inside the format
+		/// <param name="args">Arguments to be replaced inside the format
 		/// string</param>
 		public OBTException(string format, Exception innerexception,
 		                    params object []args)
