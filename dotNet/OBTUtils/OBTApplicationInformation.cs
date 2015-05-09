@@ -35,7 +35,7 @@ namespace OBTUtils
 		/// <summary>
 		/// App's global version
 		/// </summary>
-		public const string appVersion = "4.0.3";
+		public const string appVersion = "4.0.4";
 		
 		/// <summary>
 		/// Group or person responsible for the
@@ -46,8 +46,8 @@ namespace OBTUtils
 		/// <summary>
 		/// String containing the copyright of the app's authors
 		/// </summary>
-		public const string appAuthorCopyright = "Copyright 2010-2013 (C) by " +
-			"Rodolfo Conde Martínez";
+		public const string appAuthorCopyright = "Copyright 2010-2015 (C) by " +
+			"Rodolfo Conde Martínez <rodolfocondemx@gmail.com>";
 		
 		/// <summary>
 		/// String containing the path in the filesystem

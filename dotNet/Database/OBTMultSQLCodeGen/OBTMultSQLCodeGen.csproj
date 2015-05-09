@@ -7,7 +7,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>OBTMultSQLCodeGen</RootNamespace>
     <AssemblyName>OBTMultSQLCodeGen</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -23,11 +23,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <BaseAddress>4194304</BaseAddress>
     <RegisterForComInterop>False</RegisterForComInterop>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
     <FileAlignment>4096</FileAlignment>
+    <Prefer32Bit>False</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>

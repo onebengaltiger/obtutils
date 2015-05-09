@@ -13,7 +13,7 @@
     <WixVariables>WixUILicenseRtf=license.rtf</WixVariables>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <DefineConstants>BasicBuildDir=\bin\Debug\;OBTVersion=4.0.3</DefineConstants>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">

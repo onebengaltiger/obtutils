@@ -1,0 +1,7 @@
+v4.0.4
+- Fixes on technical documentation
+- Fixes on years copyright
+- Generate versions for .Net 4.0 and 4.5.X
+- Use Configuration "Any CPU" to make OBTUtils portable across x86-x64 boundaries
+- Move on to GitHub ??
+- Added convertor from SQL table to Java POJOs (OBTSQL2POJO) 
