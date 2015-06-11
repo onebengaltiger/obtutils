@@ -1,5 +1,5 @@
 ﻿/***************************************************************************
- *   Copyright (C) 2011-2013 by Rodolfo Conde Martinez                     *
+ *   Copyright (C) 2011-2015 by Rodolfo Conde Martinez                     *
  *   rcm@gmx.co.uk                                                         *
  ***************************************************************************/
 
@@ -32,6 +32,10 @@ namespace OBTUtils.Messaging
 		/// <see cref="sendMessage" />
 		private int theMainMessenger;
 		
+		/// <summary>
+		/// Gets or sets the main messenger's index in the
+		/// array of messengers
+		/// </summary>
 		public int TheMainMessenger {
 			get {
 				return theMainMessenger;
@@ -129,7 +133,6 @@ namespace OBTUtils.Messaging
 		/// <param name="format">Formatting string</param>
 		/// <param name="args">arguments to be replaced inside
 		/// the format string</param>
-		/// <see cref="IMessenger.sendMessage" />
 		public void sendMessage(string format, params object []args)
 		{
 			sendTitleMessage(String.Empty, format, args);
@@ -142,7 +145,7 @@ namespace OBTUtils.Messaging
 		/// <param name="format">Formatting string</param>
 		/// <param name="args">arguments to be replaced inside
 		/// the format string</param>
-		/// <see cref="IMessenger.sendMessage" />
+		/// <see cref="OBTUtils.Messaging.IMessenger.sendMessage" />
 		public void sendTitleMessage(string title, string format, params object []args)
 		{
 			if (messengers.Length > 0)
@@ -241,7 +244,6 @@ namespace OBTUtils.Messaging
 		/// <param name="format">Formatting string</param>
 		/// <param name="args">arguments to be replaced inside
 		/// the format string</param>
-		/// <see cref="IMessenger.sendMessage" />
 		public void broadcastMessage(string format, params object []args)
 		{
 			broadcastTitleMessage(String.Empty, format, args);
@@ -254,7 +256,6 @@ namespace OBTUtils.Messaging
 		/// <param name="format">Formatting string</param>
 		/// <param name="args">arguments to be replaced inside
 		/// the format string</param>
-		/// <see cref="IMessenger.sendMessage" />
 		public void broadcastTitleMessage(string title, string format,
 		                                  params object []args)
 		{

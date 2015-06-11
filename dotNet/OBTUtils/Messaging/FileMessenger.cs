@@ -1,5 +1,5 @@
 ﻿/***************************************************************************
- *   Copyright (C) 2013 by Rodolfo Conde Martínez                          *
+ *   Copyright (C) 2013-2015 by Rodolfo Conde Martínez                     *
  *   rcm@gmx.co.uk                                                         *
  ***************************************************************************/
 
@@ -70,9 +70,6 @@ namespace OBTUtils.Messaging
 		/// Constructor
 		/// </summary>
 		/// <param name="path">File path</param>
-		/// <param name="automaticnewline">Contains a value indicating if a new line
-		/// should be written to the associated file each time
-		/// a message is send</param>
 		/// <remarks>The FileMode to open the file with this constructor is
 		/// FileMode.Append; the encoding used is the default
 		/// system's encoding and each time a message is send using this messenger,

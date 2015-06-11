@@ -1,5 +1,5 @@
 ﻿/***************************************************************************
- *   Copyright (C) 2011-2013 by Rodolfo Conde Martinez                     *
+ *   Copyright (C) 2011-2015 by Rodolfo Conde Martinez                     *
  *   rcm@gmx.co.uk                                                         *
  ***************************************************************************/
 
@@ -156,18 +156,18 @@ namespace OBTUtils.Net.Mail
 				try {
 					smtpc.Send(msg);
 					break;
-				} catch (Exception ex) {
-					Boss.broadcastTitleDebugMessage("Excepción al intentar mandar mensaje" +
-					                                " de correo:{0}{1}",
-					                                System.Environment.NewLine, ex);
+				} catch (Exception anerror) {
+					TheMessengersBoss.broadcastTitleDebugMessage("Excepción al intentar mandar mensaje" +
+					                                             " de correo:{0}{1}",
+					                                             Environment.NewLine, anerror);
 					
 					if (local_ntryToSendMails <= 0)
-						throw ex;
+						throw;
 //					else if (local_ntryToSendMails == 1)
 //						smtpc.Timeout *= 2;
 				}
 			}
-		}		
+		}
 		
 		/// <summary>
 		/// Send an email from the address <c>fromAddress</c> to the given adresses in
@@ -179,17 +179,17 @@ namespace OBTUtils.Net.Mail
 		/// <param name="serverport">SMTP Server's port</param>
 		/// <param name="withssl">Enable or diable SSL when sending the email</param>
 		/// <param name="fromAddress">The address of the person who is sending the email</param>
-		/// <param name="tosAddresses">The address which will reveive the email</param>
+		/// <param name="toAddresses">The address which will reveive the email</param>
 		/// <param name="subject">Email's subject</param>
 		/// <param name="body">Email's contents</param>
 		public void sendMail(string username, SecureString password,
 		                     string smtpserver,
 		                     int serverport,
 		                     bool withssl,
-		                     MailAddress fromAddress, MailAddress toAddress,
+		                     MailAddress fromAddress, MailAddress toAddresses,
 		                     string subject, string body) {
 			sendMail(username, password, smtpserver, serverport, withssl,
-			         fromAddress, new MailAddress [] { toAddress },
+			         fromAddress, new MailAddress [] { toAddresses },
 			         subject, body,  (Attachment []) null);
 		}
 		

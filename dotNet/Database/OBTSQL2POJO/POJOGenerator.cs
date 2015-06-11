@@ -1,5 +1,5 @@
 ﻿/***************************************************************************
- *   Copyright (C) 2014 by Rodolfo Conde Martínez                          *
+ *   Copyright (C) 2014-2015 by Rodolfo Conde Martínez                     *
  *   rcm@gmx.co.uk                                                         *
  ***************************************************************************/
 
@@ -62,7 +62,9 @@ namespace OBTUtils.Data.Java
 		/// </summary>
 		/// <param name="providergenericname">ADO.Net database provider's
 		/// invariant name</param>
-		/// <param name="bdconnectionstring">The connection string to be used</param>
+		/// <param name="dbconnectionstring">The connection string to be used</param>
+		/// <param name = "entitysupport">This parameter indicates which type of entity database support
+		/// must be programmed into the generated POJOs classes</param>
 		public POJOGenerator(string providergenericname,
 		                     string dbconnectionstring, JavaDBEntitiesManagers entitysupport)
 			: base(DbProviderFactories.GetFactory(providergenericname),
@@ -115,10 +117,11 @@ namespace OBTUtils.Data.Java
 				conscadena.AppendFormat("\t/// Represents the column named {0}", column.ColumnName).AppendLine();
 				
 				if (entitysupport == JavaDBEntitiesManagers.ormlite)
-					conscadena.AppendFormat("\t@DatabaseField").AppendLine();
+					conscadena.AppendFormat("\t@DatabaseField(columnName = \"{0}\")",
+					                        column.ColumnName).AppendLine();
 				
-				conscadena.AppendFormat("\tprivate {0} {1};", 
-				                        getJavaTypeForColumn(column), 
+				conscadena.AppendFormat("\tprivate {0} {1};",
+				                        getJavaTypeForColumn(column),
 				                        column.ColumnName).AppendLine();
 				
 				conscadena.AppendLine();
@@ -183,6 +186,40 @@ namespace OBTUtils.Data.Java
 				conscadena.AppendLine("\t}");
 				
 				conscadena.AppendLine();
+			}
+			
+			if (entitysupport == JavaDBEntitiesManagers.ormlite) {
+				int ncolumns = 0;
+				
+				foreach (DataColumn column in thetable.Columns) {
+					string propertyname;
+					
+					if (column.ColumnName.Length > 1)
+						propertyname = Char.ToUpper(column.ColumnName[0]).ToString() + column.ColumnName.Substring(1);
+					else
+						propertyname = column.ColumnName.ToUpper();
+					
+					conscadena.AppendLine("\t/**");
+					conscadena.AppendLine("\t *");
+					conscadena.AppendFormat("\t * Gets the database name of the column named {0}",
+					                        column.ColumnName).AppendLine();
+					conscadena.AppendLine("\t *");
+					conscadena.AppendFormat("\t * @return The name of the column").AppendLine();
+					conscadena.AppendLine("\t *");
+					conscadena.AppendLine("\t */");
+					conscadena.AppendFormat(
+						"\tpublic {0} get{1}DBName() {{",
+						getJavaTypeForColumn(column),
+						propertyname
+					).AppendLine();
+					
+					conscadena.AppendFormat("\t\treturn \"{0}\";", column.ColumnName).AppendLine();
+					
+					conscadena.AppendLine("\t}");
+					
+					if (++ncolumns < thetable.Columns.Count)
+						conscadena.AppendLine();
+				}
 			}
 			
 			conscadena.AppendLine("}");

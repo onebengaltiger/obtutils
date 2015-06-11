@@ -1,5 +1,5 @@
 ﻿/***************************************************************************
- *   Copyright (C) 2013 by Rodolfo Conde Martínez                          *
+ *   Copyright (C) 2013-2015 by Rodolfo Conde Martínez                     *
  *   rcm@gmx.co.uk                                                         *
  ***************************************************************************/
 
@@ -32,7 +32,7 @@ namespace OBTUtils.Data.ADO
 		/// <summary>
 		/// The connection object
 		/// </summary>
-		protected DbConnection theconnection;
+		protected DbConnection __theconnection;
 		
 //		/// <summary>
 //		/// The maximum waiting time for the execution of a command
@@ -96,7 +96,7 @@ namespace OBTUtils.Data.ADO
 //				TheMessengersBoss.sendDebugMessage("Se cerro la conexión de BD");
 //			}
 			
-			theconnection = null;
+			__theconnection = null;
 			dbFactory = null;
 //			TheMessengersBoss.sendDebugMessage("Variables asignadas a null");
 		}
@@ -129,8 +129,8 @@ namespace OBTUtils.Data.ADO
 		/// <param name="connectionstring">Database driver's specific
 		/// connection string</param>
 		public void initConnection(string connectionstring) {
-			theconnection = dbFactory.CreateConnection();
-			theconnection.ConnectionString = connectionstring;
+			__theconnection = dbFactory.CreateConnection();
+			__theconnection.ConnectionString = connectionstring;
 		}
 		
 		/// <summary>
@@ -146,8 +146,8 @@ namespace OBTUtils.Data.ADO
 		/// to the given values</returns>
 		public DbCommand getCommand(CommandType cmdtype, string commandtext,
 		                            int cmdtimeout, params object []parameters) {
-			if (theconnection != null) {
-				DbCommand acommand = theconnection.CreateCommand();
+			if (__theconnection != null) {
+				DbCommand acommand = __theconnection.CreateCommand();
 				
 				acommand.CommandType = cmdtype;
 				acommand.CommandText = commandtext;
@@ -198,7 +198,7 @@ namespace OBTUtils.Data.ADO
 		/// <returns>A new DbDataAdapter object using the connection
 		/// managed by this object</returns>
 		public DbDataAdapter getAdapter() {
-			if (theconnection != null)
+			if (__theconnection != null)
 				return dbFactory.CreateDataAdapter();
 			else
 				throw new OBTDataException("This manager does not have a connection. " +
@@ -226,7 +226,7 @@ namespace OBTUtils.Data.ADO
 		/// </summary>
 		public DbConnection Theconnection {
 			get {
-				return theconnection;
+				return __theconnection;
 			}
 		}
 	}

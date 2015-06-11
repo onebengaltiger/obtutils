@@ -54,6 +54,19 @@
 						             System="yes" />
 					</Component>
 					
+					<Component Id="OBTSQL2POJOEXEComp"
+					           Guid="1106F40F-B1E5-46F7-9AED-52E297965FDA" DiskId="1">
+						<File Id="OBTSQL2POJOEXEFile"
+						      Name="OBTSQL2POJO.exe"
+						      Source="..\Database\OBTSQL2POJO\$(var.BasicBuildDir)\OBTSQL2POJO.exe"
+						      KeyPath="yes" />
+						
+<!--						<Environment Id="PATH" Name="PATH"
+						             Value="[INSTALLDIR]" Permanent="no"
+						             Part="last" Action="set"
+						             System="yes" />-->
+					</Component>					
+					
 					<Component Id="OBTUtilsEnterpriseComp"
 					           Guid="02942E7D-BA6C-4FA1-8564-2DBCC50E101F" DiskId="1">
 						<File Id="OBTUtilsEnterpriseFile"

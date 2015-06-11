@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*"
+	<Product Id="BC2276FB-FE77-40DD-B1C4-35E45017633D"
 	         Name="OBT SDK"
 	         Language="1034"
 	         Codepage="1252"
@@ -56,6 +56,8 @@
 				<ComponentRef Id="OBTUtilsDataComp" />
 				
 				<ComponentRef Id="OBTMultSQLCodeGenEXEComp" />
+				
+				<ComponentRef Id="OBTSQL2POJOEXEComp" />				
 				
 				<ComponentRef Id="OBTUtilsEnterpriseComp" />
 			</Feature>

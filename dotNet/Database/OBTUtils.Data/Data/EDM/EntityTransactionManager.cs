@@ -1,5 +1,5 @@
 ﻿/***************************************************************************
- *   Copyright (C) 2011-2013 by Rodolfo Conde Martinez                     *
+ *   Copyright (C) 2011-2015 by Rodolfo Conde Martinez                     *
  *   rcm@gmx.co.uk                                                         *
  ***************************************************************************/
 
@@ -90,7 +90,7 @@ namespace OBTUtils.Data.EDM
 		protected override void Dispose(bool disposing)
 		{
 			if (theTransaction != null) {
-				Boss.broadcastDebugMessage("ROLLING BACK TRANSACTION IN Dispose !!!");
+				TheMessengersBoss.broadcastDebugMessage("ROLLING BACK TRANSACTION IN Dispose !!!");
 				
 				theTransaction.Rollback();
 				
@@ -178,7 +178,7 @@ namespace OBTUtils.Data.EDM
 		/// Commits the transaction associated with the ObjectContext obtained
 		/// with one of the getContextWithTransaction methods
 		/// </summary>
-		/// <param name="cierraConexion"><c>true</c> if the connection must be closed
+		/// <param name="closeconnection"><c>true</c> if the connection must be closed
 		/// <c>false</c> otherwise</param>
 		private void commitTransaction(bool closeconnection) {
 			if (theConnection == null || theTransaction == null)

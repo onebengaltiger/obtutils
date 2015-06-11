@@ -1,5 +1,5 @@
 ﻿/***************************************************************************
- *   Copyright (C) 2012 by Rodolfo Conde Martínez                          *
+ *   Copyright (C) 2012-2015 by Rodolfo Conde Martínez                     *
  *   rcm@gmx.co.uk                                                         *
  ***************************************************************************/
 
@@ -58,7 +58,7 @@ namespace OBTUtils.Data
 		/// Constructor
 		/// </summary>
 		/// <param name="format">Format string</param>
-		/// <param name="innerException">Some exception that ocurred before
+		/// <param name="innerexception">Some exception that ocurred before
 		/// this exception</param>
 		/// <param name="args">arguments to be replaces inside the format
 		/// string</param>

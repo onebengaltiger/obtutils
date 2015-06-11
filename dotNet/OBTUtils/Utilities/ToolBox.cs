@@ -1,5 +1,5 @@
 ﻿/***************************************************************************
- *   Copyright (C) 2011-2013 by Rodolfo Conde Martinez                     *
+ *   Copyright (C) 2011-2015 by Rodolfo Conde Martinez                     *
  *   rcm@gmx.co.uk                                                         *
  ***************************************************************************/
 
@@ -134,18 +134,18 @@ namespace OBTUtils.Utilities
 		/// returned string</param>
 		/// <returns>A StringBuilder object representation, with characters in hexadecimal
 		/// format, of a portion of the array of bytes</returns>
-		private static StringBuilder byteArray2StringBuilder(byte []arreglo,
-		                                                     int principio, int cuantos) {
-			if (principio < 0 || principio > arreglo.Length - 1)
+		private static StringBuilder byteArray2StringBuilder(byte []buffer,
+		                                                     int initialposition, int length) {
+			if (initialposition < 0 || initialposition > buffer.Length - 1)
 				throw new ArgumentOutOfRangeException("El argumento principio es invalido !!");
 			
-			if (cuantos <= 0 || cuantos > arreglo.Length)
+			if (length <= 0 || length > buffer.Length)
 				throw new ArgumentOutOfRangeException("El argumento cuantos es invalido !!");
 			
 			StringBuilder sbuilder = new StringBuilder();
 			
-			for (int i = principio; i < cuantos; ++i)
-				sbuilder.AppendFormat("{0:x2}", arreglo[i]);
+			for (int i = initialposition; i < length; ++i)
+				sbuilder.AppendFormat("{0:x2}", buffer[i]);
 			
 			return sbuilder;
 		}
@@ -250,6 +250,8 @@ namespace OBTUtils.Utilities
 		/// of the collection theobjects
 		/// </summary>
 		/// <param name="theobjects">A collection of objects</param>
+		/// <param name = "strbuilder">A StringBuilder object in which the 
+		/// method stores the output</param>
 		public static void dumpObjects(ICollection theobjects,
 		                               StringBuilder strbuilder) {
 			dumpObjects(theobjects.GetEnumerator(), strbuilder);

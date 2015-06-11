@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("OBTUtilsALLTests")]
-[assembly: AssemblyCopyright("Copyright 2010")]
+[assembly: AssemblyCopyright("Copyright 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -1,12 +1,10 @@
 ﻿/***************************************************************************
- *   Copyright (C) 2011-2013 by Rodolfo Conde Martinez                     *
+ *   Copyright (C) 2011-2015 by Rodolfo Conde Martinez                     *
  *   rcm@gmx.co.uk                                                         *
  ***************************************************************************/
 
 
 using System;
-using System.Reflection;
-using System.Resources;
 using System.Windows;
 
 
@@ -68,13 +66,12 @@ namespace OBTUtils.Messaging
 		
 		
 		/// <summary>
-		/// Send a debugging message inside a
+		/// Send a message inside a
 		/// windows forms MessageBox
 		/// </summary>
 		/// <param name="format">Formatting string</param>
 		/// <param name="args">arguments to be replaced inside
 		/// the format string</param>
-		/// <see cref="DBGMessenger.sendMessage" />
 		public void sendMessage(string format, params object[] args)
 		{
 			if (myOwner != null)
@@ -85,6 +82,7 @@ namespace OBTUtils.Messaging
 				                MessageBoxButton.OK, MessageBoxImage.Information);
 		}
 		
+		/// <summary>
 		/// Send a standar message using a messagebox
 		/// </summary>
 		/// <param name="title">Title for the message</param>
@@ -115,7 +113,7 @@ namespace OBTUtils.Messaging
 		/// <param name="format">Formatting string</param>
 		/// <param name="args">arguments to be replaced inside
 		/// the format string</param>
-		public void sendInformationMessage(string title, string format, 
+		public void sendInformationMessage(string title, string format,
 		                                   params object[] args)
 		{
 			mySendMessage(title, MessageBoxImage.Information, format, args);

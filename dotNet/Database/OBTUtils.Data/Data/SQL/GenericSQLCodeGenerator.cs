@@ -1,5 +1,5 @@
 ﻿/***************************************************************************
- *   Copyright (C) 2013 by Rodolfo Conde Martínez                          *
+ *   Copyright (C) 2013-2015 by Rodolfo Conde Martínez                     *
  *   rcm@gmx.co.uk                                                         *
  ***************************************************************************/
 
@@ -81,9 +81,9 @@ namespace OBTUtils.Data.SQL
 			else if (columntype.Equals(typeof(DateTime)))
 				retVal = "DATETIME";
 			else {
-				Boss.sendDebugMessage("getSQLType: " +
-				                      "Unknown data type: {0}",
-				                      columntype);
+				TheMessengersBoss.sendDebugMessage("getSQLType: " +
+				                                   "Unknown data type: {0}",
+				                                   columntype);
 				retVal = String.Format("UNKNOWNTYPE{0}", columntype);
 			}
 			

@@ -1,5 +1,5 @@
 ﻿/***************************************************************************
- *   Copyright (C) 2011-2013 by Rodolfo Conde Martinez                     *
+ *   Copyright (C) 2011-2015 by Rodolfo Conde Martinez                     *
  *   rcm@gmx.co.uk                                                         *
  ***************************************************************************/
 
@@ -74,7 +74,6 @@ namespace OBTUtils.Messaging
 		/// <param name="format">Formatting string</param>
 		/// <param name="args">arguments to be replaced inside
 		/// the format string</param>
-		/// <see cref="DBGMessenger.sendMessage" />
 		public void sendMessage(string format, params object[] args)
 		{
 			if (myOwner != null)
@@ -85,6 +84,7 @@ namespace OBTUtils.Messaging
 				                MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 		
+		/// <summary>
 		/// Send a standar message using a messagebox
 		/// </summary>
 		/// <param name="title">Title for the message</param>
