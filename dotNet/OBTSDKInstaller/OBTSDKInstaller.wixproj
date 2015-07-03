@@ -12,7 +12,7 @@
     <SupressIces>ICE45</SupressIces>
     <WixVariables>WixUILicenseRtf=license.rtf</WixVariables>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-    <DefineConstants>BasicBuildDir=\bin\Release\;OBTVersion=4.0.4</DefineConstants>
+    <DefineConstants>BasicBuildDir=\bin\Release\;OBTVersion=4.0.4.77</DefineConstants>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -47,6 +47,10 @@
     <ProjectReference Include="..\Database\OBTMultSQLCodeGen\OBTMultSQLCodeGen.csproj">
       <Project>{F148B375-1B00-4661-A038-1B7AF2BC4AD0}</Project>
       <Name>OBTMultSQLCodeGen</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Database\OBTSQL2POJO\OBTSQL2POJO.csproj">
+      <Project>{5F36B3E6-348E-405E-A7DE-907A86560574}</Project>
+      <Name>OBTSQL2POJO</Name>
     </ProjectReference>
     <ProjectReference Include="..\Database\OBTUtils.Data\OBTUtils.Data.csproj">
       <Project>{DAEE2802-8B55-4331-9326-1ADFC94E1A47}</Project>
