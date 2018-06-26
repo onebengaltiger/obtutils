@@ -1,0 +1,5 @@
+Utilities/Bool2Lang
+Generics/GenericCompoundResult
+Utilities/ToolBox - dumpOject
+Messaging - Cosas especificas de Windows
+Net/Mail - Revisar
